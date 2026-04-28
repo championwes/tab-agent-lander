@@ -12,6 +12,9 @@ Thumbs.db
 *.docx
 *.rtf
 
+# Source imagery — optimized versions live in site/assets/
+imagry/
+
 # Misc
 *.log
 node_modules/
