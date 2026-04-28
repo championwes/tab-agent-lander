@@ -200,32 +200,56 @@ h3 { font-size: 1.2rem; }
   flex-wrap: wrap;
   margin-bottom: 28px;
 }
+.hero-ctas .btn {
+  padding: 14px 22px;
+  font-size: 0.95rem;
+}
 .hero-proof {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 32px 0 0;
+  margin: 56px auto 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  max-width: 600px;
+  grid-template-columns: repeat(4, auto);
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  max-width: 100%;
 }
-@media (max-width: 600px) {
-  .hero-proof { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 720px) {
+  .hero-proof {
+    grid-template-columns: repeat(2, auto);
+    margin-top: 40px;
+    padding-top: 24px;
+    gap: 14px 0;
+  }
 }
 .hero-proof li {
   display: flex;
   flex-direction: column;
-  border-left: 3px solid var(--cyan);
-  padding-left: 12px;
+  align-items: flex-start;
+  padding: 0 36px;
+  border-right: 1px solid var(--line);
+}
+.hero-proof li:last-child { border-right: none; }
+@media (max-width: 720px) {
+  .hero-proof li { padding: 0 24px; }
+  .hero-proof li:nth-child(2) { border-right: none; }
 }
 .hero-proof strong {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--navy);
   font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 .hero-proof span {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
 }
 /* Hero earnings preview — live demo of the calculator */
 .hero-preview {
@@ -284,7 +308,7 @@ h3 { font-size: 1.2rem; }
   font-feature-settings: "tnum";
 }
 .hero-preview-prefix {
-  font-size: clamp(2.4rem, 4.8vw, 3.4rem);
+  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
   font-weight: 900;
   color: var(--cyan);
   line-height: 1;
@@ -292,14 +316,14 @@ h3 { font-size: 1.2rem; }
   margin-right: 2px;
 }
 .hero-preview-number {
-  font-size: clamp(2.6rem, 5.2vw, 3.8rem);
+  font-size: clamp(2rem, 3.8vw, 2.7rem);
   font-weight: 900;
   color: var(--cyan);
   letter-spacing: -0.03em;
   line-height: 1;
 }
 .hero-preview-suffix {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.02em;
