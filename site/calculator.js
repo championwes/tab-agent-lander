@@ -172,6 +172,31 @@ document.addEventListener("submit", (e) => {
    ============================================ */
 document.getElementById("year").textContent = new Date().getFullYear();
 
+/* Hero earnings preview — count-up the big lift number on first paint */
+(function () {
+  const el = document.querySelector(".hero-preview-number");
+  if (!el) return;
+  const target = Number(el.dataset.target || 0);
+  if (!target || target <= 0) return;
+
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    el.textContent = `$${target.toLocaleString("en-US")}`;
+    return;
+  }
+
+  const duration = 1600;
+  const start = performance.now() + 350; // small delay so the page settles
+  const tick = (now) => {
+    const t = Math.max(0, Math.min(1, (now - start) / duration));
+    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+    const value = Math.round(target * eased);
+    el.textContent = `$${value.toLocaleString("en-US")}`;
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+})();
+
 const style = document.createElement("style");
 style.textContent = `
   .lead-success { text-align: center; padding: 16px 0; }
