@@ -882,8 +882,9 @@ h3 { font-size: 1.2rem; }
 .playbook-book {
   position: relative;
   display: flex;
+  width: 100%;
   aspect-ratio: 5 / 7;            /* book proportions */
-  max-width: 420px;
+  max-width: 460px;
   margin: 20px auto;
   perspective: 1600px;
   transform: rotate(-2deg);
@@ -946,6 +947,7 @@ h3 { font-size: 1.2rem; }
 .playbook-book-cover {
   position: relative;
   flex: 1;
+  display: flex;
   background:
     radial-gradient(ellipse at 30% 20%, rgba(95,215,228,0.18), transparent 55%),
     linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
@@ -981,12 +983,13 @@ h3 { font-size: 1.2rem; }
 
 /* Inner gold/cyan double-line frame */
 .playbook-book-frame {
-  position: absolute;
-  inset: 22px 22px;
+  position: relative;
+  flex: 1;
+  margin: 24px;
+  padding: 28px 22px;
   border: 1px solid rgba(95,215,228,0.35);
   outline: 1px solid rgba(95,215,228,0.12);
   outline-offset: 4px;
-  padding: 26px 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1072,7 +1075,7 @@ h3 { font-size: 1.2rem; }
 
 @media (max-width: 540px) {
   .playbook-book { max-width: 320px; }
-  .playbook-book-frame { padding: 20px 16px; inset: 16px 16px; }
+  .playbook-book-frame { padding: 20px 14px; margin: 16px; }
   .playbook-book-title { font-size: 1.35rem; }
 }
 .playbook-copy h2 { margin-bottom: 14px; }
