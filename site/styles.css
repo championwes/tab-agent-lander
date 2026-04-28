@@ -878,47 +878,202 @@ h3 { font-size: 1.2rem; }
 @media (max-width: 880px) {
   .playbook-grid { grid-template-columns: 1fr; gap: 32px; }
 }
-.playbook-cover {
-  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
-  border-radius: var(--radius-lg);
-  padding: 38px;
-  color: #fff;
-  box-shadow: var(--shadow-lg);
+/* ---- Playbook book ---------------------------------------- */
+.playbook-book {
   position: relative;
-  overflow: hidden;
+  display: flex;
+  aspect-ratio: 5 / 7;            /* book proportions */
+  max-width: 420px;
+  margin: 20px auto;
+  perspective: 1600px;
   transform: rotate(-2deg);
-  transition: transform 0.3s;
+  transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+  filter:
+    drop-shadow(0 18px 24px rgba(8, 40, 73, 0.18))
+    drop-shadow(0 4px 8px rgba(8, 40, 73, 0.12));
 }
-.playbook-cover:hover { transform: rotate(0deg); }
-.playbook-cover::before {
+.playbook-book:hover {
+  transform: rotate(-1deg) translateY(-4px);
+}
+
+/* The "page block" peeking out on the right side of the book */
+.playbook-book::after {
   content: "";
   position: absolute;
-  inset: -30% -30% auto auto;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(95,215,228,0.4), transparent 70%);
+  top: 6px;
+  right: -3px;
+  bottom: 6px;
+  width: 6px;
+  background:
+    linear-gradient(90deg, #d8d4c8 0%, #f4efe6 30%, #d8d4c8 55%, #f4efe6 80%, #c9c3b3 100%);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 1px 0 0 rgba(0,0,0,0.08) inset;
+  z-index: 1;
 }
-.playbook-cover-inner { position: relative; z-index: 1; }
-.playbook-cover h3 {
+
+/* Book spine — the bound left edge */
+.playbook-book-spine {
+  width: 22px;
+  flex: none;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,0.45) 0%,
+      rgba(255,255,255,0.05) 40%,
+      rgba(0,0,0,0.18) 100%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);
+  border-right: 1px solid rgba(0,0,0,0.4);
+  border-radius: 3px 0 0 3px;
+  position: relative;
+  z-index: 2;
+}
+.playbook-book-spine::before {
+  /* Faux cloth texture on the spine */
+  content: "";
+  position: absolute;
+  inset: 6px 4px;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(255,255,255,0.04) 0 1px,
+      transparent 1px 3px),
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,0.10) 0 1px,
+      transparent 1px 4px);
+  border-top: 1px solid rgba(95,215,228,0.35);
+  border-bottom: 1px solid rgba(95,215,228,0.35);
+}
+
+/* Front cover */
+.playbook-book-cover {
+  position: relative;
+  flex: 1;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(95,215,228,0.18), transparent 55%),
+    linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
   color: #fff;
-  font-size: 1.6rem;
-  margin: 12px 0 6px;
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+  z-index: 2;
 }
-.playbook-cover p {
-  color: rgba(255,255,255,0.8);
-  margin: 0 0 22px;
-  font-size: 1rem;
+
+/* Faux cloth/linen texture on the cover */
+.playbook-book-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.025) 0 1px,
+      transparent 1px 3px),
+    repeating-linear-gradient(-45deg,
+      rgba(0,0,0,0.05) 0 1px,
+      transparent 1px 3px);
+  pointer-events: none;
 }
-.playbook-toc {
+/* Subtle inner highlight along the top edge */
+.playbook-book-cover::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  pointer-events: none;
+}
+
+/* Inner gold/cyan double-line frame */
+.playbook-book-frame {
+  position: absolute;
+  inset: 22px 22px;
+  border: 1px solid rgba(95,215,228,0.35);
+  outline: 1px solid rgba(95,215,228,0.12);
+  outline-offset: 4px;
+  padding: 26px 22px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  border-top: 1px solid rgba(255,255,255,0.15);
-  padding-top: 18px;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
 }
-.playbook-toc span {
+
+.playbook-book-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  margin-bottom: auto;
+}
+
+.playbook-book-emblem {
+  color: var(--cyan);
+  margin: 18px 0 14px;
+  opacity: 0.9;
+}
+
+.playbook-book-title {
+  font-family: 'Inter', serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0 0 14px;
+  max-width: 11ch;
+}
+
+.playbook-book-rule {
+  width: 64px;
+  height: 1px;
+  background: var(--cyan);
+  margin: 0 auto 14px;
+  position: relative;
+}
+.playbook-book-rule::before,
+.playbook-book-rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--cyan);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.playbook-book-rule::before { left: -8px; }
+.playbook-book-rule::after  { right: -8px; }
+
+.playbook-book-subtitle {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.85);
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 26ch;
+}
+
+.playbook-book-foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.playbook-book-volume { color: var(--cyan); }
+.playbook-book-format { color: rgba(255,255,255,0.5); }
+
+@media (max-width: 540px) {
+  .playbook-book { max-width: 320px; }
+  .playbook-book-frame { padding: 20px 16px; inset: 16px 16px; }
+  .playbook-book-title { font-size: 1.35rem; }
 }
 .playbook-copy h2 { margin-bottom: 14px; }
 .playbook-copy p {
