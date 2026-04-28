@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TAB Freight Agent Program | Up to 80% Commission, Asset-Backed</title>
+<meta name="description" content="Independent freight agents at TAB keep up to 80% of gross profit, get 24/7 ops support, and access nearly 900 trucks and 4,000 trailers through Artur Express. Calculate your commission lift." />
+<meta property="og:title" content="TAB Freight Agent Program — Up to 80% Commission" />
+<meta property="og:description" content="Asset-backed freight agency built by agents, for agents. Calculate your commission lift in 30 seconds." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo.png" alt="TAB" class="brand-logo" />
+    </a>
+    <nav class="nav-links">
+      <a href="#calculator">Calculator</a>
+      <a href="#difference">Why TAB</a>
+      <a href="#playbook">Playbook</a>
+      <a href="#faq">FAQ</a>
+      <a href="#cta" class="btn btn-sm btn-primary">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Freight Agent Program</span>
+      <h1>Your Business.<br/>Your Terms.<br/><span class="accent">Up to 80% Commission.</span><br/>Backed by Real Assets.</h1>
+      <p class="lede">TAB is the asset-backed freight agency built by agents, for agents. Keep more of what you earn, off-load the back office, and tap into the Artur Express fleet to win freight a non-asset broker can't touch.</p>
+      <div class="hero-ctas">
+        <a href="#calculator" class="btn btn-primary btn-lg">Calculate your commission lift</a>
+        <a href="#playbook" class="btn btn-ghost btn-lg">Get the growth playbook</a>
+      </div>
+      <ul class="hero-proof">
+        <li><strong>22</strong><span>years in business</span></li>
+        <li><strong>A+</strong><span>financial rating</span></li>
+        <li><strong>100%</strong><span>2-yr agent retention</span></li>
+        <li><strong>92%</strong><span>of agents grew last 2 yrs</span></li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner">
+        <div class="hero-card-title">Domestic Agent Commission Tiers</div>
+        <div class="hero-card-row"><span>≤ $5M revenue</span><strong>65%</strong></div>
+        <div class="hero-card-row"><span>$5M – $10M</span><strong>70%</strong></div>
+        <div class="hero-card-row"><span>$10M – $20M</span><strong>75%</strong></div>
+        <div class="hero-card-row"><span>$20M+</span><strong>80%</strong></div>
+        <div class="hero-card-row hero-card-row-alt"><span>International agents</span><strong>Flat 60%</strong></div>
+        <div class="hero-card-foot">Tiers off <strong>top-line customer revenue</strong>, not gross profit. <br/>Automatic — no asking, no negotiating.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust-strip">
+  <div class="container trust-row">
+    <span>Recognized by:</span>
+    <span class="trust-badge">Inc. 5000</span>
+    <span class="trust-badge">Transport Topics Top 100</span>
+    <span class="trust-badge">CCJ Top 250</span>
+    <span class="trust-badge">Top Workplaces</span>
+    <span class="trust-badge">EY Entrepreneur of the Year</span>
+    <span class="trust-badge">TCA Highway Angel</span>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR ============ -->
+<section id="calculator" class="section calc-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Earnings Calculator · 30-Second Tool</span>
+      <h2>See exactly how much more you'd earn at TAB</h2>
+      <p>Enter the <strong>top-line revenue you bill customers</strong> and your current split. We'll show your projected take-home at TAB — based on our published commission tiers.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form id="calc-form" class="calc-form" novalidate>
+        <div class="field">
+          <label for="annualRevenue">Your annual customer revenue</label>
+          <div class="input-prefix">
+            <span>$</span>
+            <input type="number" id="annualRevenue" min="0" step="100000" value="6000000" required />
+          </div>
+          <small><strong>Top-line revenue you bill customers</strong> — not gross profit. This is what TAB tiers off of.</small>
+        </div>
+
+        <div class="field">
+          <label for="region">Where are you based?</label>
+          <select id="region" class="select">
+            <option value="domestic" selected>USA</option>
+            <option value="international">International</option>
+          </select>
+          <small>USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60%.</small>
+        </div>
+
+        <div class="field">
+          <label for="currentSplit">Your current commission split</label>
+          <div class="input-suffix">
+            <input type="number" id="currentSplit" min="1" max="100" step="1" value="60" required />
+            <span>%</span>
+          </div>
+          <small>Most agents fall between 50% and 70%.</small>
+        </div>
+
+        <div class="field">
+          <label for="gpMargin">(Optional) Your average gross profit margin</label>
+          <div class="input-suffix">
+            <input type="number" id="gpMargin" min="0" max="100" step="0.5" placeholder="15" />
+            <span>%</span>
+          </div>
+          <small>Leave blank to use the historical 15% industry blend.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate my lift</button>
+      </form>
+
+      <div class="calc-result" id="calc-result" aria-live="polite">
+        <div class="calc-result-head">
+          <span class="eyebrow">Your projection</span>
+          <h3>Run the numbers</h3>
+          <p class="muted">Fill the form and hit calculate.</p>
+        </div>
+
+        <div class="calc-numbers" hidden>
+          <div class="calc-row">
+            <span>Your TAB commission tier</span>
+            <strong id="r-tier">—</strong>
+          </div>
+          <div class="calc-row">
+            <span>Estimated gross profit</span>
+            <strong id="r-gp">$0</strong>
+          </div>
+          <div class="calc-row">
+            <span>You today</span>
+            <strong id="r-current">$0</strong>
+          </div>
+          <div class="calc-row total">
+            <span>You at TAB</span>
+            <strong id="r-tab">$0</strong>
+          </div>
+          <div class="calc-lift">
+            <div>
+              <span>You'd earn</span>
+              <strong id="r-delta">$0 more / year</strong>
+            </div>
+            <div class="calc-lift-pct">
+              <span>That's a</span>
+              <strong id="r-pct">+0%</strong>
+              <span>lift</span>
+            </div>
+          </div>
+          <p class="calc-disclaimer"><strong>For illustration only.</strong> This is a preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin — not a guaranteed offer or commitment. Final terms are confirmed in writing on your discovery call. Asset/line-haul revenue is calculated separately and is not included here.</p>
+        </div>
+
+        <form id="lead-form" class="lead-form" hidden>
+          <h4>Email me this report + book a call</h4>
+          <div class="lead-row">
+            <input type="text" name="name" placeholder="Full name" required />
+            <input type="email" name="email" placeholder="Work email" required />
+          </div>
+          <div class="lead-row">
+            <input type="tel" name="phone" placeholder="Phone (optional)" />
+            <input type="text" name="company" placeholder="Current agency / company" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send my report</button>
+          <p class="form-note">No spam. We'll send the breakdown and someone from TAB leadership (not a recruiter) will reach out.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE TAB DIFFERENCE ============ -->
+<section id="difference" class="section dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow light">Why agents move to TAB</span>
+      <h2>Four things most agencies promise.<br/>We actually deliver.</h2>
+    </div>
+    <div class="grid-4">
+      <div class="card-feature">
+        <div class="card-icon">01</div>
+        <h3>Tiers that grow with you</h3>
+        <p>65% → 70% → 75% → 80% as your customer revenue scales. <strong>Automatic.</strong> No annual negotiation, no leaving for a raise. The structure has never changed in 22 years.</p>
+      </div>
+      <div class="card-feature">
+        <div class="card-icon">02</div>
+        <h3>Real asset access</h3>
+        <p>Nearly 900 trucks and 4,000 trailers through Artur Express. When a shipper asks "do you have assets?" the answer is yes — and that opens RFPs and dedicated lanes non-asset brokers can't touch.</p>
+      </div>
+      <div class="card-feature">
+        <div class="card-icon">03</div>
+        <h3>Agent Development team</h3>
+        <p>Most agencies have an onboarding team and then "good luck." TAB has an Agent Development team that fights your internal battles — credit limits, customer setups, escalations — so you can stay on the phone selling.</p>
+      </div>
+      <div class="card-feature">
+        <div class="card-icon">04</div>
+        <h3>Tech + back office covered</h3>
+        <p>Ditat TMS, DAT, Truckstop, ZoomInfo, Carrier Assure, MyCarrierPortal. Plus billing, A/R, payables, claims, compliance, cargo & liability insurance, surety bond. You sell. We handle the rest.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRACK RECORD ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Track record</span>
+      <h2>The numbers we publish — because we can.</h2>
+    </div>
+    <div class="grid-stats">
+      <div class="stat-card"><strong>100%</strong><span>2-year agent retention</span></div>
+      <div class="stat-card"><strong>92%</strong><span>of agents grew in the past 2 years</span></div>
+      <div class="stat-card"><strong>&lt; 5%</strong><span>customers lost in transition</span></div>
+      <div class="stat-card"><strong>$250K → $12M</strong><span>top agent growth in 5 years</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO OWNS WHAT ============ -->
+<section class="section gray">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">The split — beyond commission</span>
+      <h2>You stay in your zone of genius.<br/>We handle everything else.</h2>
+    </div>
+    <div class="split-table">
+      <div class="split-col">
+        <h3>You own</h3>
+        <ul>
+          <li>Customer relationships</li>
+          <li>Sales &amp; pricing strategy</li>
+          <li>Lane &amp; account growth</li>
+          <li>Carrier relationships</li>
+          <li>Your brand &amp; reputation</li>
+          <li>How you run your day</li>
+        </ul>
+      </div>
+      <div class="split-divider" aria-hidden="true"></div>
+      <div class="split-col">
+        <h3>TAB handles</h3>
+        <ul>
+          <li>Customer billing &amp; A/R</li>
+          <li>Carrier payables &amp; fast pay</li>
+          <li>Credit checks (1–2 hour turnaround)</li>
+          <li>Claims management</li>
+          <li>Cargo &amp; liability insurance, surety bond</li>
+          <li>Compliance, contracts, MyCarrierPortal vetting</li>
+          <li>Tech stack (Ditat, DAT, Truckstop, ZoomInfo, Carrier Assure)</li>
+          <li>24/7 operational support &amp; load coverage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRANSITION ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Switching agencies</span>
+      <h2>The biggest fear of switching, handled.</h2>
+      <p>Every agent we talk to has the same anxiety: <em>"What if I lose customers in the move?"</em> It's the single largest reason good agents stay stuck at agencies that no longer serve them. TAB's transition process is built to take that fear off the table.</p>
+    </div>
+    <div class="grid-3">
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <h3>Requirements</h3>
+        <p>TAB handles certifications, insurance, contracts, and applications — every box checked before you have to tell a single customer.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">2</span>
+        <h3>Transition (we sit with you)</h3>
+        <p>Our Agent Development team holds your hand through customer onboarding, credit setup (1–2 hours per account), and your first loads. You're not figuring our system out alone.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">3</span>
+        <h3>Ramp to new heights</h3>
+        <p>Once you're live, automatic tier raises, asset access, and back-office leverage remove the solo ceiling. Agents have scaled from $250K to $12M+ in five years.</p>
+      </div>
+    </div>
+    <p class="section-foot">Less than 5% of customers are lost in TAB transitions — vs. an industry where converting even 70% of a "fully committed" book is considered a win.</p>
+  </div>
+</section>
+
+<!-- ============ PLAYBOOK ============ -->
+<section id="playbook" class="section playbook-section">
+  <div class="container playbook-grid">
+    <div class="playbook-cover" aria-hidden="true">
+      <div class="playbook-cover-inner">
+        <span class="eyebrow light">Free download · PDF</span>
+        <h3>The Freight Agent Playbook</h3>
+        <p>How to Switch Agencies Without Losing Customers — and Ramp to New Heights Once You Do</p>
+        <div class="playbook-toc">
+          <span>01 · The real reason most agents stay stuck</span>
+          <span>02 · Pre-move: protecting your customer book</span>
+          <span>03 · The clean transition checklist</span>
+          <span>04 · Diagnose your real growth bottleneck</span>
+          <span>05 · Quote bigger with credit-protected pipeline</span>
+          <span>06 · Carrier loyalty through fast, reliable pay</span>
+          <span>07 · Add lanes without adding headcount</span>
+        </div>
+      </div>
+    </div>
+    <div class="playbook-copy">
+      <span class="eyebrow">Lead Magnet · Playbook</span>
+      <h2>Switch smoothly. Then ramp to new heights.</h2>
+      <p>The playbook covers both halves of the move: the transition mechanics that protect your customer book on the way in, and the operational levers that let you scale past your solo ceiling once you're settled. Built from interviews with TAB agents who grew their books 5x, 10x, even 50x.</p>
+      <form id="playbook-form" class="lead-form bordered">
+        <div class="lead-row">
+          <input type="text" name="name" placeholder="Full name" required />
+          <input type="email" name="email" placeholder="Work email" required />
+        </div>
+        <div class="lead-row">
+          <input type="text" name="company" placeholder="Current agency / company" />
+          <input type="number" name="years" placeholder="Years as a freight agent" min="0" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Send me the playbook</button>
+        <p class="form-note">PDF will hit your inbox in under a minute.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL / FOUNDER ============ -->
+<section class="section dark quote-section">
+  <div class="container quote-wrap">
+    <blockquote>
+      "We've been in your shoes. Many of us at TAB started out as freight agents ourselves. That's why our program is built differently — we built the platform we wished we had."
+    </blockquote>
+    <div class="quote-attr">
+      <strong>TAB Leadership</strong>
+      <span>Brian AuBuchon, Chad Allen &amp; team — former agents, now running the agency</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions agents ask on the discovery call.</h2>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>What's the actual commission structure?</summary>
+        <p>Domestic agents are tiered off their <strong>top-line customer revenue</strong> (not gross profit): 65% up to $5M, 70% from $5M–$10M, 75% from $10M–$20M, and 80% above $20M. International agents earn a flat 60%. Tier raises are <em>automatic</em> as your revenue crosses each threshold — you don't have to ask for them, and they've never changed in 22 years.</p>
+      </details>
+      <details>
+        <summary>Will I lose customers when I transition?</summary>
+        <p>Less than 5% of customers are lost in TAB transitions. Most agencies are happy if 70% of a "fully committed" book actually converts. The difference is our Agent Development team — we sit with you through customer onboarding, credit setup (1–2 hours per account), and your first loads, instead of handing you a portal and wishing you luck.</p>
+      </details>
+      <details>
+        <summary>Why is the calculator based on revenue and not gross profit?</summary>
+        <p>Because the TAB tiers are off the revenue you bill the customer — that's a meaningful advantage. Most agency programs tier off gross profit, which can be inflated, deflated, or interpreted differently. Tiering off top-line revenue is cleaner and harder to game in either direction.</p>
+      </details>
+      <details>
+        <summary>What about the assets — do I make extra on those?</summary>
+        <p>Yes, and the structure is intentionally different. Asset (line-haul) revenue is paid on a separate scale based on customer longevity — 5% in the first six months, then stepping down to 4%, 3%, and 2% as the asset team takes over day-to-day load management. The intent isn't for agents to <em>sell</em> assets — it's so when a shipper asks "do you have trucks?" the answer is yes, which opens RFPs and dedicated lanes you couldn't access otherwise.</p>
+      </details>
+      <details>
+        <summary>What do I actually need to get started?</summary>
+        <p>A computer, a phone, high-speed internet, transportation experience, and a customer book of business. Everything else — TMS, load boards, lead data, insurance, surety bond, authority, billing, claims — is on TAB.</p>
+      </details>
+      <details>
+        <summary>What is the Agent Development team and why does it matter?</summary>
+        <p>It's a dedicated team that advocates for you internally — fighting for credit limits with accounting, escalating customer issues, helping you navigate the system in your first weeks. Most agencies have an onboarding team and then "good luck, email us." TAB built the Agent Development team because we kept hearing from agents that real, ongoing support was the thing they were missing everywhere else.</p>
+      </details>
+      <details>
+        <summary>Can multiple agents work the same customer?</summary>
+        <p>Yes — TAB supports multi-agent customer arrangements. Specifics are walked through on the discovery call.</p>
+      </details>
+      <details>
+        <summary>Who do I report to day-to-day?</summary>
+        <p>You run your own book. TAB is a partner and a back office, not a manager. Operational support is 24/7 when you need it.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="cta" class="section cta-section">
+  <div class="container cta-wrap">
+    <h2>Ready to see what your book could do at TAB?</h2>
+    <p>Book a 30-minute discovery call with TAB leadership. No recruiter pitch — just a real conversation about your business and whether we're a fit.</p>
+    <div class="cta-buttons">
+      <a href="#calculator" class="btn btn-ghost-light btn-lg">Run the calculator</a>
+      <a href="mailto:Brian@tab-llc.com?subject=Agent%20Program%20Discovery%20Call" class="btn btn-primary btn-lg">Book a discovery call</a>
+    </div>
+    <div class="cta-contact">
+      <span>Or reach us directly:</span>
+      <a href="tel:3147143408">314-714-3408</a>
+      <a href="mailto:Brian@tab-llc.com">Brian@tab-llc.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <strong>TAB LLC</strong>
+      <span>4824 Park 370 Blvd, Hazelwood, MO 63042</span>
+      <span>A wholly owned subsidiary of Artur Express</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://tab-llc.com" target="_blank" rel="noopener">tab-llc.com</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#playbook">Playbook</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-meta">
+      <span>&copy; <span id="year"></span> TAB LLC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="calculator.js"></script>
+</body>
+</html>

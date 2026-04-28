@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / local dev
+.claude/
+.vscode/
+.idea/
+
+# Source briefs — keep out of the public repo
+*.pdf
+*.docx
+*.rtf
+
+# Misc
+*.log
+node_modules/
