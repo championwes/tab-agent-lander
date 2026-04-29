@@ -25,10 +25,30 @@
   @page {
     size: Letter;
     margin: 0.7in 0.75in 0.85in;
+    @bottom-right {
+      content: "TAB";
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5pt;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #0d3b66;
+      padding-bottom: 0.2in;
+    }
+    @bottom-left {
+      content: "The Freight Agent Playbook";
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      padding-bottom: 0.2in;
+    }
   }
   /* Full-bleed pages (cover, chapter openers, closing) ride to the edge */
   @page full-bleed {
     margin: 0;
+    @bottom-right { content: none; }
+    @bottom-left  { content: none; }
   }
 
   * {
@@ -162,15 +182,14 @@
     color: rgba(255,255,255,0.65);
     font-weight: 600;
   }
-  .cover-mark {
-    width: 44px; height: 44px;
-    border: 1.5px solid var(--cyan);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--cyan);
-    font-weight: 800;
-    font-size: 14pt;
-    letter-spacing: 0;
+  .cover-logo {
+    height: 0.6in;
+    width: auto;
+    display: block;
+    /* The logo's blue spine sits well on the navy cover, but the
+       LLC subscript can read low-contrast — gentle drop-shadow
+       lifts it without altering the brand. */
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
   }
   .cover-mid {
     margin-top: auto;
@@ -323,6 +342,16 @@
     max-width: 5.5in;
     margin: 0;
   }
+  .chapter-opener .opener-logo {
+    position: absolute;
+    bottom: 0.6in;
+    right: 0.8in;
+    height: 0.45in;
+    width: auto;
+    z-index: 3;
+    opacity: 0.85;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+  }
 
   /* ---- Callout boxes -------------------------------------- */
   .callout {
@@ -411,6 +440,13 @@
   }
 
   /* ---- Closing page --------------------------------------- */
+  .closing-logo {
+    height: 0.6in;
+    width: auto;
+    margin: 0 auto 36px;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  }
   .closing {
     page: full-bleed;
     width: 8.5in;
@@ -456,8 +492,8 @@
 <!-- ============ COVER ============ -->
 <section class="cover">
   <div class="cover-top">
-    <span>TAB · Freight Agent Series</span>
-    <div class="cover-mark">T</div>
+    <span>Freight Agent Series</span>
+    <img class="cover-logo" src="../site/assets/logo.png" alt="TAB" />
   </div>
 
   <div class="cover-mid">
@@ -511,6 +547,7 @@
   <h2>The Real Reason Most Agents Stay Stuck.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">There's a moment when effort stops being the issue. Knowing what's actually capping you is half the battle.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 01 BODY ============ -->
@@ -553,6 +590,7 @@
   <h2>Pre-Move: Protecting Your Customer Book.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">The work you do quietly in the 30 days before a move is what protects the book you've spent years building.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 02 BODY ============ -->
@@ -628,6 +666,7 @@
   <h2>The Clean Transition Checklist.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">A clean transition is run like a project, not a feeling. Here's the actual project plan — and which lines aren't yours to drive.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 03 BODY ============ -->
@@ -713,6 +752,7 @@
   <h2>Diagnose Your Real Growth Bottleneck.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">Most agents grow by adding customers. Almost never the highest-leverage move.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 04 BODY ============ -->
@@ -750,6 +790,7 @@
   <h2>Quote Bigger with a Credit-Protected Pipeline.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">The single most underrated growth lever for experienced agents: how big you're willing to quote.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 05 BODY ============ -->
@@ -797,6 +838,7 @@
   <h2>Carrier Loyalty Through Fast, Reliable Pay.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">The strongest predictor of whether a carrier hauls for you again is how fast you paid them last time.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 06 BODY ============ -->
@@ -843,6 +885,7 @@
   <h2>Add Lanes Without Adding Headcount.</h2>
   <div class="chapter-rule"></div>
   <p class="chapter-tagline">Before you hire, exhaust the four cheaper sources of capacity you almost certainly already have.</p>
+  <img class="opener-logo" src="../site/assets/logo.png" alt="TAB" />
 </section>
 
 <!-- ============ CH 07 BODY ============ -->
@@ -890,6 +933,7 @@
 
 <!-- ============ CLOSING ============ -->
 <section class="closing">
+  <img class="closing-logo" src="../site/assets/logo.png" alt="TAB" />
   <span class="eyebrow light" style="margin-bottom: 24px;">Closing</span>
   <h2>Two things are true.</h2>
   <p>The platform you build on determines your ceiling more than your effort does.</p>
