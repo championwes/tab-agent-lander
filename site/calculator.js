@@ -173,6 +173,73 @@ document.addEventListener("submit", (e) => {
    ============================================ */
 document.getElementById("year").textContent = new Date().getFullYear();
 
+/* Testimonial gallery — scroll-snap carousel with arrows + dots */
+(function () {
+  const track = document.getElementById("testimonial-track");
+  const dotsContainer = document.getElementById("testimonial-dots");
+  if (!track) return;
+
+  const cards = Array.from(track.querySelectorAll(".testimonial-card"));
+  const arrows = document.querySelectorAll(".testimonial-arrow");
+  if (cards.length === 0) return;
+
+  // Build dots: one per card
+  cards.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.role = "tab";
+    dot.setAttribute("aria-label", `Go to testimonial ${i + 1}`);
+    dot.addEventListener("click", () => scrollToCard(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = Array.from(dotsContainer.querySelectorAll("button"));
+
+  function scrollToCard(idx) {
+    const card = cards[Math.max(0, Math.min(cards.length - 1, idx))];
+    if (!card) return;
+    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: "smooth" });
+  }
+
+  function activeIndex() {
+    // The card whose left edge is closest to the track's scrollLeft
+    const sl = track.scrollLeft;
+    let best = 0, bestDelta = Infinity;
+    cards.forEach((card, i) => {
+      const delta = Math.abs((card.offsetLeft - track.offsetLeft) - sl);
+      if (delta < bestDelta) { bestDelta = delta; best = i; }
+    });
+    return best;
+  }
+
+  function updateUI() {
+    const idx = activeIndex();
+    dots.forEach((d, i) => d.setAttribute("aria-current", i === idx ? "true" : "false"));
+
+    // Arrow disabled state — fully scrolled left/right
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    arrows.forEach((btn) => {
+      const dir = Number(btn.dataset.dir);
+      if (dir < 0) btn.disabled = track.scrollLeft <= 1;
+      else btn.disabled = track.scrollLeft >= maxScroll - 1;
+    });
+  }
+
+  arrows.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const dir = Number(btn.dataset.dir);
+      scrollToCard(activeIndex() + dir);
+    });
+  });
+
+  let raf;
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(updateUI);
+  });
+  window.addEventListener("resize", updateUI);
+  updateUI();
+})();
+
 /* Hero earnings preview — count-up the big lift number on first paint */
 (function () {
   const el = document.querySelector(".hero-preview-number");
