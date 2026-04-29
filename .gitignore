@@ -12,8 +12,15 @@ Thumbs.db
 *.docx
 *.rtf
 
+# …but the generated playbook ships with the site
+!playbook/playbook.pdf
+!site/assets/playbook.pdf
+
 # Source imagery — optimized versions live in site/assets/
 imagry/
+
+# Source testimonial videos — host on Cloudflare Stream / Vimeo / YouTube
+testimonials/
 
 # Misc
 *.log

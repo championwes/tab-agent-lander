@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Freight Agent Playbook · TAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0d3b66;
+    --navy-deep: #082849;
+    --cyan: #5fd7e4;
+    --cyan-soft: #d4f5f8;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --paper: #ffffff;
+    --paper-warm: #fbfaf6;
+  }
+
+  @page {
+    size: Letter;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    font-size: 11pt;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--navy); text-decoration: none; }
+
+  /* ---- Page wrapper ---------------------------------------- */
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.7in 0.75in;
+    page-break-after: always;
+    position: relative;
+    background: var(--paper);
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---- Headings -------------------------------------------- */
+  h1, h2, h3, h4 {
+    color: var(--navy);
+    margin: 0 0 0.5em;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  h1 { font-size: 32pt; font-weight: 800; }
+  h2 { font-size: 22pt; font-weight: 800; }
+  h3 { font-size: 13pt; font-weight: 700; }
+  h4 { font-size: 11pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cyan); }
+
+  p { margin: 0 0 0.85em; }
+  em { font-style: italic; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cyan-soft);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .eyebrow.light {
+    color: var(--cyan);
+    background: rgba(95,215,228,0.18);
+    border: 1px solid rgba(95,215,228,0.35);
+  }
+
+  /* ---- COVER ---------------------------------------------- */
+  .cover {
+    background:
+      radial-gradient(800px 500px at 80% 10%, rgba(95,215,228,0.20), transparent 65%),
+      linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 1.4in 0.8in;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 9pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    font-weight: 600;
+  }
+  .cover-mark {
+    width: 44px; height: 44px;
+    border: 1.5px solid var(--cyan);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    font-weight: 800;
+    font-size: 14pt;
+    letter-spacing: 0;
+  }
+  .cover-mid {
+    margin-top: auto;
+    margin-bottom: 0.4in;
+  }
+  .cover-mid h1 {
+    color: #fff;
+    font-size: 48pt;
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.45in;
+    max-width: 8.5in;
+  }
+  .cover-mid h1 .accent { color: var(--cyan); }
+  .cover-rule {
+    width: 72px; height: 2px; background: var(--cyan); margin-bottom: 0.25in;
+  }
+  .cover-mid p {
+    color: rgba(255,255,255,0.85);
+    font-size: 14pt;
+    font-style: italic;
+    font-weight: 400;
+    max-width: 5.6in;
+    line-height: 1.4;
+  }
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 9pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+  }
+  .cover-bottom strong { color: var(--cyan); }
+
+  /* ---- TOC ------------------------------------------------ */
+  .toc h2 { margin-bottom: 0.4in; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .toc-list li:last-child { border-bottom: 0; }
+  .toc-num {
+    color: var(--cyan);
+    font-weight: 700;
+    font-size: 11pt;
+    letter-spacing: 0.1em;
+    min-width: 36px;
+  }
+  .toc-title {
+    flex: 1;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 13pt;
+  }
+  .toc-section {
+    font-size: 9pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0.4in 0 0.2in;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .toc-section:first-of-type { margin-top: 0; }
+
+  /* ---- Foreword / regular pages ---------------------------- */
+  .body-page h2 {
+    border-bottom: 2px solid var(--cyan);
+    padding-bottom: 12px;
+    margin-bottom: 0.35in;
+  }
+  .body-page h3 {
+    margin-top: 0.35in;
+  }
+  .body-page ul, .body-page ol {
+    margin: 0 0 1em;
+    padding-left: 1.4em;
+  }
+  .body-page li { margin-bottom: 6px; line-height: 1.5; }
+  .body-page strong { color: var(--ink); font-weight: 700; }
+
+  /* ---- Chapter opener ------------------------------------- */
+  .chapter-opener {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    padding: 1in 0.8in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 11in;
+  }
+  .chapter-opener .bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .chapter-opener .bg-image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .chapter-opener::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(8,40,73,0.55) 0%, rgba(8,40,73,0.92) 100%);
+  }
+  .chapter-opener > * { position: relative; z-index: 2; }
+  .chapter-opener .chapter-num {
+    font-size: 11pt;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+  .chapter-opener h2 {
+    color: #fff;
+    font-size: 36pt;
+    font-weight: 900;
+    line-height: 1.05;
+    max-width: 6.5in;
+    margin: 0 0 0.3in;
+    border: 0;
+    padding: 0;
+  }
+  .chapter-opener .chapter-rule {
+    width: 60px; height: 2px; background: var(--cyan); margin-bottom: 18px;
+  }
+  .chapter-opener .chapter-tagline {
+    font-size: 13pt;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    max-width: 5.5in;
+    margin: 0;
+  }
+
+  /* ---- Callout boxes -------------------------------------- */
+  .callout {
+    border-left: 3px solid var(--cyan);
+    background: var(--cyan-soft);
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p { margin: 0; }
+  .callout strong { color: var(--navy); }
+
+  .callout.tab-helps {
+    background: linear-gradient(135deg, rgba(95,215,228,0.10) 0%, rgba(13,59,102,0.05) 100%);
+    border-left-color: var(--navy);
+  }
+  .callout.tab-helps::before {
+    content: "How TAB helps";
+    display: block;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .callout.next-move {
+    background: var(--navy);
+    color: #fff;
+    border-left-color: var(--cyan);
+  }
+  .callout.next-move::before {
+    content: "Next move";
+    display: block;
+    font-size: 9pt;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  .callout.next-move p { color: rgba(255,255,255,0.95); }
+  .callout.next-move strong { color: #fff; }
+
+  .blockquote-style {
+    border-left: 3px solid var(--cyan);
+    padding: 4px 18px;
+    margin: 16px 0;
+    font-style: italic;
+    color: var(--ink-2);
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+  }
+  .checklist li {
+    padding: 8px 0 8px 36px;
+    position: relative;
+    line-height: 1.45;
+    border-bottom: 1px dashed var(--line);
+  }
+  .checklist li:last-child { border-bottom: 0; }
+  .checklist li.tab::before { content: "⚙"; color: var(--cyan); }
+  .checklist li.you::before { content: "✦"; color: var(--navy); }
+  .checklist li::before {
+    position: absolute; left: 8px; top: 8px;
+    font-weight: 700; font-size: 13pt;
+  }
+  .checklist-key {
+    display: flex;
+    gap: 24px;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 0 0 14px;
+    padding: 8px 12px;
+    background: var(--paper-warm);
+    border-radius: 6px;
+  }
+  .checklist-key span::before {
+    margin-right: 6px;
+    font-weight: 700;
+  }
+  .checklist-key .you::before { content: "✦"; color: var(--navy); }
+  .checklist-key .tab::before { content: "⚙"; color: var(--cyan); }
+
+  .timeline-head {
+    color: var(--cyan);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10pt;
+    margin: 22px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---- Closing page --------------------------------------- */
+  .closing {
+    background: linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 1in 0.8in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    page-break-after: auto;
+    min-height: 11in;
+  }
+  .closing h2 {
+    color: #fff;
+    font-size: 32pt;
+    border: 0;
+    padding: 0;
+    margin-bottom: 0.3in;
+  }
+  .closing p { color: rgba(255,255,255,0.85); font-size: 12pt; max-width: 5.5in; margin: 0 auto 14pt; }
+  .closing .signoff { margin-top: 0.4in; font-style: italic; color: var(--cyan); }
+  .closing .contact {
+    margin-top: 0.5in;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-family: monospace;
+    font-size: 11pt;
+    color: rgba(255,255,255,0.85);
+  }
+  .closing .contact div { margin: 6px 0; }
+  .closing .contact strong { color: var(--cyan); }
+
+  /* ---- Page footer ---------------------------------------- */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in;
+    left: 0.75in;
+    right: 0.75in;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .page-foot strong { color: var(--navy); }
+
+  /* ---- Print tweaks --------------------------------------- */
+  @media print {
+    .page, .cover, .chapter-opener, .closing { page-break-after: always; }
+    .closing { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="cover-top">
+    <span>TAB · Freight Agent Series</span>
+    <div class="cover-mark">T</div>
+  </div>
+
+  <div class="cover-mid">
+    <h1>The Freight<br/>Agent <span class="accent">Playbook</span></h1>
+    <div class="cover-rule"></div>
+    <p>How to switch agencies without losing customers — and ramp to new heights once you do.</p>
+  </div>
+
+  <div class="cover-bottom">
+    <span>Volume I · First Edition</span>
+    <span><strong>tab-llc.com</strong></span>
+  </div>
+</section>
+
+<!-- ============ FOREWORD ============ -->
+<section class="page body-page">
+  <span class="eyebrow">Foreword</span>
+  <h2>We've been in your shoes.</h2>
+  <p>Many of us at TAB started out as freight agents — running our own books, hustling for every customer, chasing carriers for updates, and hoping the back office would actually run our credit checks before the load timed out. We know what works. We also know exactly where the friction lives, because we lived it.</p>
+  <p>This playbook is the document we wished we'd had when we were thinking about a move. It covers both halves of the question every serious agent eventually asks themselves: <em>"How do I switch agencies without losing what I've built?"</em> and <em>"How do I scale past the ceiling I keep hitting?"</em></p>
+  <p>The first three chapters are the mechanics of a clean transition. The last four are the operational levers that let you grow once you're settled. Every chapter ends with a concrete next move you can run this week.</p>
+  <p>We're not going to sell you anything in these pages. Read it, take what's useful, and ignore the rest. If by the time you finish you want to talk to us, you'll know where to find us.</p>
+  <p style="margin-top: 28px; font-style: italic; color: var(--cyan); font-weight: 600;">— TAB Leadership</p>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Foreword</span></div>
+</section>
+
+<!-- ============ TOC ============ -->
+<section class="page body-page toc">
+  <span class="eyebrow">Contents</span>
+  <h2>What's inside.</h2>
+
+  <div class="toc-section">Part I · The Move</div>
+  <ol class="toc-list" start="1">
+    <li><span class="toc-num">01</span><span class="toc-title">The Real Reason Most Agents Stay Stuck</span></li>
+    <li><span class="toc-num">02</span><span class="toc-title">Pre-Move: Protecting Your Customer Book</span></li>
+    <li><span class="toc-num">03</span><span class="toc-title">The Clean Transition Checklist</span></li>
+  </ol>
+
+  <div class="toc-section">Part II · The Ramp</div>
+  <ol class="toc-list" start="4">
+    <li><span class="toc-num">04</span><span class="toc-title">Diagnose Your Real Growth Bottleneck</span></li>
+    <li><span class="toc-num">05</span><span class="toc-title">Quote Bigger with a Credit-Protected Pipeline</span></li>
+    <li><span class="toc-num">06</span><span class="toc-title">Carrier Loyalty Through Fast, Reliable Pay</span></li>
+    <li><span class="toc-num">07</span><span class="toc-title">Add Lanes Without Adding Headcount</span></li>
+  </ol>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Contents</span></div>
+</section>
+
+<!-- ============ CH 01 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/fleet-yard.jpg" alt=""/></div>
+  <div class="chapter-num">Part I · The Move &nbsp;·&nbsp; Chapter 01</div>
+  <h2>The Real Reason Most Agents Stay Stuck.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">There's a moment when effort stops being the issue. Knowing what's actually capping you is half the battle.</p>
+</section>
+
+<!-- ============ CH 01 BODY ============ -->
+<section class="page body-page">
+  <h2>The Real Reason Most Agents Stay Stuck</h2>
+
+  <p>There's a moment in every experienced freight agent's career when effort stops being the issue.</p>
+  <p>The customers are there. The carriers are there. The work ethic is there. But growth starts to slow anyway. Quotes take longer than they used to. Capacity is harder to secure. Bigger opportunities feel riskier than they should. And the harder you push, the less the needle moves.</p>
+  <p>When agents reach this point, they almost always blame themselves first. They think they need to work more hours, prospect harder, hire help, get a better CRM. Sometimes those things help around the edges. Usually they don't.</p>
+  <p><strong>The bottleneck isn't you. It's the platform behind you.</strong></p>
+
+  <h3>The four ceilings put on agents</h3>
+  <p>In our 22 years of running an agency program — and our combined decades before that as agents — we've seen the same four ceilings come up over and over:</p>
+  <p><strong>1. Credit limits that won't grow with you.</strong> You bring in a customer who could do $2M with you. The agency approves them at $250K because their finance department doesn't want the exposure. You quote smaller, you bill less, you grow slower.</p>
+  <p><strong>2. Slow or unreliable carrier pay.</strong> When carriers don't get paid quickly, they stop coming back. You spend more time chasing capacity, your reputation in the carrier community erodes, and you end up paying more for loads you used to cover easily.</p>
+  <p><strong>3. Operational support that disappears after onboarding.</strong> Most agencies have a dedicated team to set you up. After that, you're navigating ERP, accounting, claims, and compliance alone — and those teams don't know you, don't prioritize you, and don't fight for you.</p>
+  <p><strong>4. A commission split that doesn't move.</strong> You hit the cap. You can't earn more without leaving. So eventually you do.</p>
+  <p>If you've felt any of those ceilings personally, you're not failing. You're succeeding inside a system that wasn't built to scale with you.</p>
+
+  <h3>How to know it's the platform and not you</h3>
+  <p>Ask yourself three questions:</p>
+  <ul>
+    <li>Have I added customers in the last 12 months who could be doing 5x what they are today, but the agency's credit, capacity, or process is in the way?</li>
+    <li>Are my carriers complaining about pay, or have I lost any quality carriers because of slow settlements?</li>
+    <li>When I have a problem with a customer setup, credit limit, or claim, does my agency advocate for me — or do I have to be my own lobbyist inside their building?</li>
+  </ul>
+  <p>If you answered yes to any of those, you're not stuck. You're capped.</p>
+
+  <div class="callout next-move">
+    <p>Spend 30 minutes this week writing down the three deals or accounts where the agency's process — not your effort — held you back in the last year. Quantify what those would have been worth if the friction wasn't there. <strong>That's your real ceiling.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 01</span></div>
+</section>
+
+<!-- ============ CH 02 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/support-desk.jpg" alt=""/></div>
+  <div class="chapter-num">Part I · The Move &nbsp;·&nbsp; Chapter 02</div>
+  <h2>Pre-Move: Protecting Your Customer Book.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">The work you do quietly in the 30 days before a move is what protects the book you've spent years building.</p>
+</section>
+
+<!-- ============ CH 02 BODY ============ -->
+<section class="page body-page">
+  <h2>Pre-Move: Protecting Your Customer Book</h2>
+
+  <p>The single biggest fear we hear from agents thinking about a move: <em>"What if I lose customers in the transition?"</em></p>
+  <p>It's a legitimate concern. Even when an agent gets 100% verbal commitment from a customer to follow them, a realistic conversion rate at most agencies is around 70%. Things come up. Procurement gets involved. Credit applications stall. A boss says no. The agent ends up rebuilding part of their book from scratch.</p>
+  <p>That outcome isn't inevitable — it's a function of how you prepare in the weeks <em>before</em> you ever announce a move. The work you do here is what protects the book you've spent years building.</p>
+
+  <h3>The 30-day pre-move audit</h3>
+  <p>Before you do anything else, give yourself 30 days of quiet, internal preparation. Don't tell anyone. Don't sign anything. Just gather:</p>
+  <p><strong>Your customer ledger.</strong></p>
+  <ul>
+    <li>Top 20 customers ranked by gross profit</li>
+    <li>Decision-maker name, role, and contact info for each</li>
+    <li>Operations contact (the person who actually books loads)</li>
+    <li>AP contact (the person who pays you)</li>
+    <li>Credit terms and current credit limit</li>
+    <li>Any contracts or RFP commitments and their expiration dates</li>
+  </ul>
+  <p><strong>Your carrier ledger.</strong></p>
+  <ul>
+    <li>Top 30 carriers by load volume and revenue</li>
+    <li>Primary contact (dispatcher, owner-operator, or fleet manager)</li>
+    <li>Lanes they cover for you</li>
+    <li>Their current pay terms and any complaints on file</li>
+  </ul>
+  <p><strong>Your operating data.</strong></p>
+  <ul>
+    <li>Last 12 months of revenue and gross profit by customer</li>
+    <li>Average margin by customer (this matters more than you think — see Chapter 4)</li>
+    <li>Any seasonal patterns</li>
+  </ul>
+  <p>You can't make a clean move without this data. And if your current agency makes it hard to extract, that itself is information.</p>
+
+  <div class="callout tab-helps">
+    <p>You're not the project manager here. The moment you decide to move, your TAB Agent Development liaison sits down with you to build this audit <em>with</em> you — pulling templates, prepping spreadsheets, and structuring the data so nothing gets missed. We've run this process dozens of times. You only have to run it once.</p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 02</span></div>
+</section>
+
+<section class="page body-page">
+  <h3>Read your contract before you read anything else</h3>
+  <p>Pull your current agent agreement. Read every word. Pay specific attention to:</p>
+  <ul>
+    <li><strong>Non-solicitation and non-compete clauses.</strong> What can you legally say to customers? For how long after you leave?</li>
+    <li><strong>Customer ownership.</strong> Some agencies claim customers as the agency's, not yours. This is the single biggest landmine.</li>
+    <li><strong>Notice period and termination.</strong> How much warning do you have to give?</li>
+    <li><strong>What happens to in-transit loads</strong> when you give notice?</li>
+  </ul>
+
+  <h3>The customer conversation framework</h3>
+  <p>When the time comes, you don't pitch your customers on the new agency. You re-pitch them on <em>you</em>, with a better backbone behind you.</p>
+  <p>The script that works:</p>
+  <div class="blockquote-style">
+    "I want to give you a heads-up that I'm moving my book to a new agency. I'm telling you first because I want to make this seamless for your team. The new platform gives me [specific benefit relevant to that customer — better credit, asset access, faster claims, etc.]. I'll handle every piece of paperwork on my side. All you'll need to do is sign a new credit application — I've already pre-filled it. Can we get on a call Thursday so I can walk you through it?"
+  </div>
+  <p>You're not asking permission. You're informing, framing the upgrade, and removing every piece of friction.</p>
+
+  <div class="callout tab-helps">
+    <p>Before you call a single customer, we'll review the script with you, pre-fill credit applications for every account in your top 20, and have your new TAB email, phone, and business cards live so you're armed for that first conversation. Most agents have credit limits approved at TAB within 1–2 hours of a customer signing — so the customer's first experience with us is "fast" rather than "let me get back to you."</p>
+  </div>
+
+  <div class="callout next-move">
+    <p>Build your pre-move audit before you do anything else. If you can't pull your top 20 customers' decision-maker contacts and last 12 months of margin data in under an hour, your agency has more leverage over your book than you realize. Or — get on a call with us, and <strong>we'll build it with you.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 02</span></div>
+</section>
+
+<!-- ============ CH 03 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/relaxed-desk.jpg" alt=""/></div>
+  <div class="chapter-num">Part I · The Move &nbsp;·&nbsp; Chapter 03</div>
+  <h2>The Clean Transition Checklist.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">A clean transition is run like a project, not a feeling. Here's the actual project plan — and which lines aren't yours to drive.</p>
+</section>
+
+<!-- ============ CH 03 BODY ============ -->
+<section class="page body-page">
+  <h2>The Clean Transition Checklist</h2>
+
+  <p>Most transitions fail in the same predictable ways: customers slip through the gap because credit lines aren't ready, carriers stop responding because invoicing got messy, or the agent burns out trying to run two systems for a month.</p>
+  <p><strong>A clean transition is run like a project, not a feeling.</strong></p>
+  <p>Here's the checklist we use with every agent who joins TAB. Every line on it is something we've watched go wrong somewhere else.</p>
+
+  <p><strong>You're not running this alone.</strong> This list looks long because we wrote down everything that has to happen. In practice, your TAB Agent Development liaison owns most of these items, drives the calendar, and pulls you in only when your input is required.</p>
+
+  <div class="checklist-key"><span class="tab">TAB-driven</span><span class="you">Your input required</span></div>
+
+  <div class="timeline-head">T-30 days · Before notice</div>
+  <ul class="checklist">
+    <li class="you">Pre-move audit complete (see Chapter 2) — <em>we build it with you</em></li>
+    <li class="you">Agent agreement reviewed by counsel if needed</li>
+    <li class="tab">New TAB agency contract executed</li>
+    <li class="tab">Email account, phone, business cards, and tech access provisioned</li>
+    <li class="tab">Cargo and liability insurance, surety bond, and authority confirmed in place</li>
+    <li class="tab">TMS training scheduled</li>
+  </ul>
+
+  <div class="timeline-head">T-14 days</div>
+  <ul class="checklist">
+    <li class="you">Top 5 customers pre-warmed (high-trust accounts only — these are the ones you want to convert first)</li>
+    <li class="tab">Credit applications pre-populated for your top 20 customers</li>
+    <li class="tab">Carrier list ready to onboard, MyCarrierPortal vetting kicked off</li>
+    <li class="tab">Internal handoff plan owned by your Agent Development liaison, with TAB ops and accounting on standby</li>
+  </ul>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 03</span></div>
+</section>
+
+<section class="page body-page">
+  <div class="timeline-head" style="margin-top: 0;">T-Day · The move</div>
+  <ul class="checklist">
+    <li class="you">Notice given to old agency in writing, per contract</li>
+    <li class="tab">In-transit loads either delivered or formally handed off — TAB ops can backstop coverage if anything is at risk</li>
+    <li class="you">Top 5 customers called within the first 24 hours</li>
+    <li class="tab">Email signature, voicemail, and contact info live before your first call</li>
+    <li class="tab">First credit applications submitted (and most approved within 1–2 hours)</li>
+  </ul>
+
+  <div class="timeline-head">T+7 days</div>
+  <ul class="checklist">
+    <li class="you">Top 20 customers all notified</li>
+    <li class="tab">Top 10 carriers re-onboarded</li>
+    <li class="tab">First loads booked, with your AD liaison shadowing the early ones</li>
+    <li class="tab">Weekly check-in scheduled with your Agent Development liaison</li>
+  </ul>
+
+  <div class="timeline-head">T+30 days</div>
+  <ul class="checklist">
+    <li class="you">All customers notified and majority converted</li>
+    <li class="tab">All active carriers re-onboarded</li>
+    <li class="tab">Revenue tracking against pre-move baseline (we share the dashboard)</li>
+    <li class="tab">Any customers who've stalled get triaged jointly with the AD team</li>
+  </ul>
+
+  <h3>What to do when a customer stalls</h3>
+  <p>Some customers will sit on a credit application for two weeks. That's normal. They're not saying no — they're just busy. The fix:</p>
+  <ol>
+    <li>Make it impossibly easy. Pre-fill everything. Send the form as a fillable PDF, not a printed copy.</li>
+    <li>CC the AP contact directly so it doesn't sit in one inbox.</li>
+    <li>Offer to get on a 10-minute call to walk through it.</li>
+    <li>If a customer won't engage at all after three weeks, that's a different conversation — but it's rare if your prep work was solid.</li>
+  </ol>
+
+  <h3>What "good" looks like</h3>
+  <p>At TAB, less than 5% of customers are lost in transition. The industry average is closer to 30%. The difference is preparation, the agent's discipline running the checklist, and the agency's willingness to actually sit with the agent through the messy parts. None of those three components is optional.</p>
+
+  <div class="callout tab-helps">
+    <p>Most agents over-estimate how much of this they'll have to run alone. Of the 28 line items above, your TAB Agent Development team owns 19. You own 9. We don't hand you the checklist — we run it <em>with</em> you, and we're the ones the customers and carriers escalate to when something needs a fast answer. The one job you can't outsource is having the customer conversations. <strong>We handle everything else.</strong></p>
+  </div>
+
+  <div class="callout next-move">
+    <p>Print this checklist. If you decide to move, run it like a project plan with hard dates against every line item — and remember most of those dates aren't yours to drive. The agencies that lose 30% of an agent's book are the ones that wing it. <strong>The agencies that lose less than 5% are the ones with a real Agent Development team.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 03</span></div>
+</section>
+
+<!-- ============ CH 04 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/agent-portrait.jpg" alt=""/></div>
+  <div class="chapter-num">Part II · The Ramp &nbsp;·&nbsp; Chapter 04</div>
+  <h2>Diagnose Your Real Growth Bottleneck.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">Most agents grow by adding customers. Almost never the highest-leverage move.</p>
+</section>
+
+<!-- ============ CH 04 BODY ============ -->
+<section class="page body-page">
+  <h2>Diagnose Your Real Growth Bottleneck</h2>
+
+  <p>Once you're past the transition, the real question is what to grow first.</p>
+  <p>Most agents intuitively grow by adding customers. New logos, new lanes, new prospecting calls. That's not wrong — but it's almost never the highest-leverage move for an experienced agent. There's usually a much bigger opportunity hiding inside the book you already have.</p>
+
+  <h3>The four bottleneck archetypes</h3>
+  <p>Sit down with your last 12 months of data and figure out which of these you actually are. They each have a different fix.</p>
+  <p><strong>The Capped Margin Agent.</strong> You have plenty of customers and carriers, but your average margin is below 12%. Growth means more billing for the same effort, but your take-home doesn't move much. <em>Fix:</em> pricing discipline, lane mix, and carrier sourcing — not new customers.</p>
+  <p><strong>The Concentration Agent.</strong> One or two customers represent more than 40% of your book. Growth feels good when those customers grow, but you're one re-bid away from a bad year. <em>Fix:</em> a deliberate diversification plan, with named target accounts in industries adjacent to your existing strength.</p>
+  <p><strong>The Capacity-Constrained Agent.</strong> You're losing quotes because you can't reliably cover lanes. You're not pricing badly — you're getting beat by brokers with deeper carrier networks or asset access. <em>Fix:</em> better carrier development, asset partnerships, and (in some cases) being willing to walk away from lanes that hurt your overall profile.</p>
+  <p><strong>The Bandwidth-Capped Agent.</strong> You're maxed out on your time. Every new customer means something else slips. <em>Fix:</em> leverage — tech, support staff, agency back-office, dedicated lanes that run themselves. <em>Not</em> working harder.</p>
+
+  <h3>The diagnostic question that cuts through everything</h3>
+  <div class="blockquote-style">
+    "If I had double the time tomorrow, what's the first thing I'd do with it?"
+  </div>
+  <p>If your honest answer is "prospect more," you're probably bandwidth-capped. If it's "fix our carrier coverage," you're capacity-constrained. If it's "rebid my biggest account because the margins are too thin," you're capped on margin. If it's "diversify out of [Customer X]," you know where the concentration risk is.</p>
+  <p>Don't try to fix all four at once. Pick the biggest one. Run at it for 90 days.</p>
+
+  <div class="callout next-move">
+    <p>Pull last 12 months of data tonight. Calculate revenue by customer, gross margin by customer, and percent of total book by customer. <strong>The bottleneck will be obvious.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 04</span></div>
+</section>
+
+<!-- ============ CH 05 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/highway-night.jpg" alt=""/></div>
+  <div class="chapter-num">Part II · The Ramp &nbsp;·&nbsp; Chapter 05</div>
+  <h2>Quote Bigger with a Credit-Protected Pipeline.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">The single most underrated growth lever for experienced agents: how big you're willing to quote.</p>
+</section>
+
+<!-- ============ CH 05 BODY ============ -->
+<section class="page body-page">
+  <h2>Quote Bigger with a Credit-Protected Pipeline</h2>
+
+  <p>The single most underrated growth lever for experienced agents: how big you're willing to quote.</p>
+  <p>Most agents are quietly self-limiting. They see a $4M opportunity and pitch a $750K version of it because they're not confident the agency's credit will support more. They're not wrong to be cautious — but they're capping themselves before the customer ever does.</p>
+
+  <h3>Why credit determines deal size</h3>
+  <p>Every quote you write is a bet on credit. If you bill a customer $200K in a month and they pay net-30, you're carrying $200K of receivables. The agency is, technically — but if the customer's credit limit is $150K, the agency starts blocking loads, slowing your business, and making you the bottleneck in the customer's eyes.</p>
+  <p>So agents pre-shrink. They quote within the limit. They never push. The customer never knows the agency could do more, because they were never asked to pay for more.</p>
+
+  <h3>What "credit-protected" actually means</h3>
+  <ol>
+    <li><strong>Credit decisions are fast</strong> — under two hours per new customer, not two weeks.</li>
+    <li><strong>Credit limits scale dynamically</strong> with the customer's payment history, not their initial application.</li>
+    <li><strong>The agency's financial health backs your quotes</strong>, so you can quote big and trust that the load won't get blocked when it grows.</li>
+    <li><strong>You know exactly what your usable credit is at any moment</strong>, so you can negotiate with confidence.</li>
+  </ol>
+  <p>That's not a perk. That's an operational requirement for any agent who wants to grow into bigger customers.</p>
+
+  <h3>How to use a credit-protected pipeline to win bigger deals</h3>
+  <p>When you're sitting in front of a target account that could be a $5M relationship:</p>
+  <ul>
+    <li><strong>Quote the whole spend, not the test load.</strong> Ask for the full annual lane plan or the inbound program, not the one-off shipment.</li>
+    <li><strong>Reference your agency's financial backing explicitly.</strong> "We carry an A+ credit rating and process credit decisions in under two hours, so we can scale with you as fast as you can give us volume." That sentence wins deals.</li>
+    <li><strong>Pre-clear credit before you quote</strong> for any prospect over $500K of expected annual volume. There's no excuse for getting awarded a deal and then having credit constrain you.</li>
+  </ul>
+
+  <h3>A real number to anchor on</h3>
+  <p>We've watched agents at TAB take customers from $250K to $3M+ in 18 months once the credit ceiling came off. The pattern is identical every time: the customer was always <em>capable</em> of doing more — the agent had just been pricing the relationship to fit a smaller container.</p>
+
+  <div class="callout next-move">
+    <p>This week, pick one customer in your book where you suspect there's 2x more spend you're not capturing. Quote them on the bigger version of the relationship. <strong>The worst answer is no, and the best answer doubles your account.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 05</span></div>
+</section>
+
+<!-- ============ CH 06 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/trucks-highway.jpg" alt=""/></div>
+  <div class="chapter-num">Part II · The Ramp &nbsp;·&nbsp; Chapter 06</div>
+  <h2>Carrier Loyalty Through Fast, Reliable Pay.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">The strongest predictor of whether a carrier hauls for you again is how fast you paid them last time.</p>
+</section>
+
+<!-- ============ CH 06 BODY ============ -->
+<section class="page body-page">
+  <h2>Carrier Loyalty Through Fast, Reliable Pay</h2>
+
+  <p>Here's a number every agent should know: in this market, the strongest predictor of whether a carrier will haul for you again is how fast you paid them last time.</p>
+  <p><strong>Not your rate. Not your relationship. Not how friendly you were on the phone. Pay speed.</strong></p>
+
+  <h3>Why carrier loyalty compounds</h3>
+  <p>A carrier who got paid on time last week answers your phone first this week. They cover your tough lanes when nobody else will. They give you a discount when you're in a bind. They tell their network about you. Over six months, this translates into:</p>
+  <ul>
+    <li>15-25% faster coverage on your average load</li>
+    <li>Lower buy rates on hard lanes</li>
+    <li>Better capacity during seasonal peaks</li>
+    <li>A reputation that pulls carriers to you instead of you chasing them</li>
+  </ul>
+  <p>And it compounds. The agents with the best carrier pay reputations spend less time covering loads year after year.</p>
+
+  <h3>The four fast-pay levers</h3>
+  <p><strong>1. Fast settlement on clean paperwork.</strong> Industry standard is anywhere from 30 to 45 days. Best-in-class is under 15. Where does your agency sit?</p>
+  <p><strong>2. Quick-pay options without absurd fees.</strong> Fast-pay programs that charge 5%+ are a tax on your carriers. The good ones are at or under 2%, with same-day or 1-day settlement.</p>
+  <p><strong>3. Clean dispute handling.</strong> When something goes wrong (and it will), how fast does your agency resolve it? Carriers don't expect zero disputes. They expect them to be handled in days, not weeks.</p>
+  <p><strong>4. Consistent, predictable timing.</strong> Variability is almost as bad as slowness. A carrier who knows they'll be paid in 21 days, every time, plans around it. A carrier who's paid in 21 days sometimes and 45 other times stops trusting you.</p>
+
+  <h3>How to know your agency is hurting your carrier reputation</h3>
+  <p>Ask three of your top carriers, plainly:</p>
+  <div class="blockquote-style">
+    "On a scale of 1 to 10, how would you rate getting paid on loads with my agency?"
+  </div>
+  <p>If you hear anything below an 8, your agency is slowly costing you capacity — and you may not have noticed yet because the loss is gradual.</p>
+
+  <div class="callout next-move">
+    <p>Call your three highest-volume carriers this week and ask them to rate your pay experience. <strong>Their answer is your reputation in the market — and your future capacity.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 06</span></div>
+</section>
+
+<!-- ============ CH 07 OPENER ============ -->
+<section class="chapter-opener">
+  <div class="bg-image"><img src="../site/assets/night-support.jpg" alt=""/></div>
+  <div class="chapter-num">Part II · The Ramp &nbsp;·&nbsp; Chapter 07</div>
+  <h2>Add Lanes Without Adding Headcount.</h2>
+  <div class="chapter-rule"></div>
+  <p class="chapter-tagline">Before you hire, exhaust the four cheaper sources of capacity you almost certainly already have.</p>
+</section>
+
+<!-- ============ CH 07 BODY ============ -->
+<section class="page body-page">
+  <h2>Add Lanes Without Adding Headcount</h2>
+
+  <p>Every agent eventually hits the same wall: their business is at the limit of what they can run alone, but hiring an assistant feels expensive, complicated, and slow.</p>
+  <p>The good news: you almost certainly don't need one yet.</p>
+
+  <h3>The leverage stack agents underuse</h3>
+  <p>Before you hire, you should have already exhausted four cheaper sources of capacity:</p>
+  <p><strong>1. The agency's back office.</strong> Billing, A/R, A/P, claims, compliance — none of that should be your job. If it currently is, you're already paying a hidden tax in time. Ask your agency exactly what they handle and what they don't. The gap is your hiring criteria.</p>
+  <p><strong>2. The right TMS.</strong> A modern, fast TMS can save you 5-10 hours a week vs. a legacy system. If you're still printing rate confirmations or copy-pasting between three tools, the TMS is your bottleneck — not your headcount.</p>
+  <p><strong>3. Asset access for dedicated lanes.</strong> If you have a customer with a steady weekly volume on a specific lane, putting that lane on agency assets means you're managing a relationship instead of dispatching loads. The asset team handles execution. You handle the customer.</p>
+  <p><strong>4. Specialized support roles inside the agency.</strong> A good agency has a dedicated Agent Development team, a credit team, a load-coverage assistance team, and a tech-stack admin. Those people are leverage. Use them.</p>
+  <p>If you've genuinely exhausted those four and you still need more capacity, <em>then</em> you're ready to hire.</p>
+
+  <h3>When you do hire, what to hire first</h3>
+  <p>The single highest-ROI hire for most agents isn't another salesperson — it's an operations support person. Someone who can:</p>
+  <ul>
+    <li>Update tracking and check calls</li>
+    <li>Build rate confirmations</li>
+    <li>Coordinate detention and accessorial paperwork</li>
+    <li>Manage the carrier inbox</li>
+  </ul>
+  <p>A junior ops person frees up 15-20 hours of your week. Twenty hours of <em>your</em> time, used to prospect or grow strategic accounts, is worth far more than the same twenty hours of theirs spent doing the same task.</p>
+
+  <h3>A simple "double-the-book" framework</h3>
+  <p>If you want to roughly double your book over the next 24 months without burning out:</p>
+  <ul>
+    <li><strong>Quarter 1:</strong> Audit and use the leverage stack above. Eliminate every operational task an agency back office should handle.</li>
+    <li><strong>Quarter 2:</strong> Pick one large customer and quote them on a dedicated-lane program backed by asset capacity. Move it onto the agency's fleet.</li>
+    <li><strong>Quarter 3:</strong> Hire your first ops support role.</li>
+    <li><strong>Quarter 4:</strong> Reinvest the freed-up time into one or two strategic accounts, not scattered prospecting.</li>
+    <li><strong>Year 2:</strong> Repeat with bigger accounts, larger dedicated programs, and a second ops hire if needed.</li>
+  </ul>
+  <p>The agents we've watched grow from $250K to $12M+ in five years didn't do it by hustling harder. They did it by stacking leverage, one tier at a time.</p>
+
+  <div class="callout next-move">
+    <p>Make a list of every operational task you handle in a week. Highlight the ones a competent agency back office should handle. Take that list to your agency. <strong>Their answer is the most important data point you'll get this quarter.</strong></p>
+  </div>
+
+  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 07</span></div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing">
+  <span class="eyebrow light" style="margin-bottom: 24px;">Closing</span>
+  <h2>Two things are true.</h2>
+  <p>The platform you build on determines your ceiling more than your effort does.</p>
+  <p>And the fear of moving — losing customers, breaking things in transition — is almost always larger than the actual risk, when the move is run with discipline.</p>
+  <p>If you've read this far, you already know which side of those two truths you're on.</p>
+  <p>We didn't write this playbook to recruit you. We wrote it because the document didn't exist, and we got tired of explaining the same things to every agent who came to talk to us. If anything in here lands, run with it — at TAB or anywhere else.</p>
+  <p>If you do want to talk to us, the door's open. Discovery calls are 30 minutes, with leadership, no recruiter pitch.</p>
+
+  <div class="signoff">— TAB Leadership</div>
+
+  <div class="contact">
+    <div><strong>314-714-3408</strong></div>
+    <div>agents@tab-llc.com</div>
+    <div>tab-llc.com</div>
+  </div>
+
+  <div style="margin-top: 0.6in; font-size: 8.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 600;">
+    © TAB LLC · A wholly owned subsidiary of Artur Express · Hazelwood, MO
+  </div>
+</section>
+
+</body>
+</html>
