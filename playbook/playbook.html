@@ -77,6 +77,29 @@
     page-break-inside: avoid;
     break-inside: avoid;
   }
+  /* Tail block: keeps the closing section of each chapter
+     glued together so 'Next move' callouts never strand alone. */
+  .chapter-tail {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  /* Keep callouts (esp. 'Next move') with the content immediately
+     before them so they don't end up orphaned on a fresh page. */
+  .callout {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+  /* Glue the last paragraph + h3 before a callout to that callout. */
+  h3 + p + .callout,
+  h3 + p + p + .callout,
+  p + .callout {
+    page-break-before: avoid;
+  }
+  /* If a callout would be alone on a page, pull its preceding
+     paragraph/heading along with it. */
+  h3:has(+ p + .callout-tail), h3:has(+ p + p + .callout-tail) {
+    page-break-after: avoid;
+  }
   .timeline-head { page-break-after: avoid; break-after: avoid; }
   .timeline-head + .checklist { page-break-before: avoid; break-before: avoid; }
 
@@ -749,11 +772,13 @@
     <li><strong>Pre-clear credit before you quote</strong> for any prospect over $500K of expected annual volume. There's no excuse for getting awarded a deal and then having credit constrain you.</li>
   </ul>
 
-  <h3>A real number to anchor on</h3>
-  <p>We've watched agents at TAB take customers from $250K to $3M+ in 18 months once the credit ceiling came off. The pattern is identical every time: the customer was always <em>capable</em> of doing more — the agent had just been pricing the relationship to fit a smaller container.</p>
+  <div class="chapter-tail">
+    <h3>A real number to anchor on</h3>
+    <p>We've watched agents at TAB take customers from $250K to $3M+ in 18 months once the credit ceiling came off. The pattern is identical every time: the customer was always <em>capable</em> of doing more — the agent had just been pricing the relationship to fit a smaller container.</p>
 
-  <div class="callout next-move">
-    <p>This week, pick one customer in your book where you suspect there's 2x more spend you're not capturing. Quote them on the bigger version of the relationship. <strong>The worst answer is no, and the best answer doubles your account.</strong></p>
+    <div class="callout next-move">
+      <p>This week, pick one customer in your book where you suspect there's 2x more spend you're not capturing. Quote them on the bigger version of the relationship. <strong>The worst answer is no, and the best answer doubles your account.</strong></p>
+    </div>
   </div>
 </section>
 
