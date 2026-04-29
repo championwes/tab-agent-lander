@@ -105,6 +105,7 @@ calcForm.addEventListener("submit", (e) => {
 
   const deltaSign = r.delta >= 0 ? "+" : "−";
   $("#r-delta").textContent = `${deltaSign}${fmt(Math.abs(r.delta))} / year`;
+  // (label above already reads "You'd earn an additional")
   $("#r-pct").textContent = `${r.liftPct >= 0 ? "+" : ""}${r.liftPct.toFixed(0)}%`;
 
   numbersBox.hidden = false;
