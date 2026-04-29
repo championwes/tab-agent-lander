@@ -350,36 +350,22 @@
     margin: 0 0 18px;
   }
   .checklist li {
-    padding: 8px 0 8px 36px;
+    padding: 8px 0 8px 28px;
     position: relative;
     line-height: 1.45;
     border-bottom: 1px dashed var(--line);
   }
   .checklist li:last-child { border-bottom: 0; }
-  .checklist li.tab::before { content: "⚙"; color: var(--cyan); }
-  .checklist li.you::before { content: "✦"; color: var(--navy); }
   .checklist li::before {
-    position: absolute; left: 8px; top: 8px;
-    font-weight: 700; font-size: 13pt;
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
   }
-  .checklist-key {
-    display: flex;
-    gap: 24px;
-    font-size: 9pt;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin: 0 0 14px;
-    padding: 8px 12px;
-    background: var(--paper-warm);
-    border-radius: 6px;
-  }
-  .checklist-key span::before {
-    margin-right: 6px;
-    font-weight: 700;
-  }
-  .checklist-key .you::before { content: "✦"; color: var(--navy); }
-  .checklist-key .tab::before { content: "⚙"; color: var(--cyan); }
 
   .timeline-head {
     color: var(--cyan);
@@ -617,8 +603,6 @@
   <p>Here's the checklist we use with every agent who joins TAB. Every line on it is something we've watched go wrong somewhere else.</p>
 
   <p><strong>You're not running this alone.</strong> This list looks long because we wrote down everything that has to happen. In practice, your TAB Agent Development liaison owns most of these items, drives the calendar, and pulls you in only when your input is required.</p>
-
-  <div class="checklist-key"><span class="tab">TAB-driven</span><span class="you">Your input required</span></div>
 
   <div class="timeline-head">T-30 days · Before notice</div>
   <ul class="checklist">
