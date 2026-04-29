@@ -1021,7 +1021,7 @@ h3 { font-size: 1.2rem; }
 }
 .testimonial-thumb {
   position: relative;
-  aspect-ratio: 9 / 14;
+  aspect-ratio: 16 / 9;
   background:
     radial-gradient(ellipse at 50% 30%, rgba(95,215,228,0.15), transparent 60%),
     linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
