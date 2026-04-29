@@ -18,7 +18,6 @@ fi
   --headless=new \
   --disable-gpu \
   --no-pdf-header-footer \
-  --no-margins \
   --virtual-time-budget=10000 \
   --print-to-pdf-no-header \
   --print-to-pdf="$OUT" \

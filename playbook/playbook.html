@@ -20,8 +20,14 @@
     --paper-warm: #fbfaf6;
   }
 
+  /* Default page: body content gets real margins so text breaks
+     across physical pages with breathing room. */
   @page {
     size: Letter;
+    margin: 0.7in 0.75in 0.85in;
+  }
+  /* Full-bleed pages (cover, chapter openers, closing) ride to the edge */
+  @page full-bleed {
     margin: 0;
   }
 
@@ -38,16 +44,34 @@
   img { max-width: 100%; display: block; }
   a { color: var(--navy); text-decoration: none; }
 
-  /* ---- Page wrapper ---------------------------------------- */
-  .page {
-    width: 8.5in;
-    min-height: 11in;
-    padding: 0.7in 0.75in;
-    page-break-after: always;
-    position: relative;
+  /* ---- Body page (flows naturally; no fixed height) -------- */
+  .body-page {
+    page-break-before: always;
     background: var(--paper);
   }
-  .page:last-child { page-break-after: auto; }
+  .body-page:first-of-type { page-break-before: auto; }
+
+  /* Anti-orphan / anti-widow controls */
+  .body-page h2, .body-page h3, .body-page h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .body-page h3 + p,
+  .body-page h2 + p,
+  .body-page h4 + p {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+  .body-page p, .body-page li {
+    orphans: 3;
+    widows: 3;
+  }
+  .callout, .blockquote-style, .checklist, .checklist-key, ul, ol {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .timeline-head { page-break-after: avoid; break-after: avoid; }
+  .timeline-head + .checklist { page-break-before: avoid; break-before: avoid; }
 
   /* ---- Headings -------------------------------------------- */
   h1, h2, h3, h4 {
@@ -84,6 +108,9 @@
 
   /* ---- COVER ---------------------------------------------- */
   .cover {
+    page: full-bleed;
+    width: 8.5in;
+    height: 11in;
     background:
       radial-gradient(800px 500px at 80% 10%, rgba(95,215,228,0.20), transparent 65%),
       linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
@@ -93,6 +120,7 @@
     flex-direction: column;
     justify-content: space-between;
     page-break-after: always;
+    overflow: hidden;
   }
   .cover-top {
     display: flex;
@@ -205,16 +233,19 @@
 
   /* ---- Chapter opener ------------------------------------- */
   .chapter-opener {
+    page: full-bleed;
+    width: 8.5in;
+    height: 11in;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     color: #fff;
     padding: 1in 0.8in;
+    page-break-before: always;
     page-break-after: always;
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    min-height: 11in;
   }
   .chapter-opener .bg-image {
     position: absolute;
@@ -363,6 +394,9 @@
 
   /* ---- Closing page --------------------------------------- */
   .closing {
+    page: full-bleed;
+    width: 8.5in;
+    height: 11in;
     background: linear-gradient(165deg, var(--navy) 0%, var(--navy-deep) 100%);
     color: #fff;
     padding: 1in 0.8in;
@@ -370,8 +404,9 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    page-break-before: always;
     page-break-after: auto;
-    min-height: 11in;
+    overflow: hidden;
   }
   .closing h2 {
     color: #fff;
@@ -393,29 +428,9 @@
   .closing .contact div { margin: 6px 0; }
   .closing .contact strong { color: var(--cyan); }
 
-  /* ---- Page footer ---------------------------------------- */
-  .page-foot {
-    position: absolute;
-    bottom: 0.4in;
-    left: 0.75in;
-    right: 0.75in;
-    display: flex;
-    justify-content: space-between;
-    font-size: 8.5pt;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding-top: 10px;
-    border-top: 1px solid var(--line);
-  }
-  .page-foot strong { color: var(--navy); }
-
-  /* ---- Print tweaks --------------------------------------- */
-  @media print {
-    .page, .cover, .chapter-opener, .closing { page-break-after: always; }
-    .closing { page-break-after: auto; }
-  }
+  /* Hide the per-page footers — Chrome can't repeat them on every
+     paginated page in pure CSS, so they're just clutter where placed. */
+  .page-foot { display: none; }
 </style>
 </head>
 <body>
@@ -440,7 +455,7 @@
 </section>
 
 <!-- ============ FOREWORD ============ -->
-<section class="page body-page">
+<section class="body-page">
   <span class="eyebrow">Foreword</span>
   <h2>We've been in your shoes.</h2>
   <p>Many of us at TAB started out as freight agents — running our own books, hustling for every customer, chasing carriers for updates, and hoping the back office would actually run our credit checks before the load timed out. We know what works. We also know exactly where the friction lives, because we lived it.</p>
@@ -448,12 +463,10 @@
   <p>The first three chapters are the mechanics of a clean transition. The last four are the operational levers that let you grow once you're settled. Every chapter ends with a concrete next move you can run this week.</p>
   <p>We're not going to sell you anything in these pages. Read it, take what's useful, and ignore the rest. If by the time you finish you want to talk to us, you'll know where to find us.</p>
   <p style="margin-top: 28px; font-style: italic; color: var(--cyan); font-weight: 600;">— TAB Leadership</p>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Foreword</span></div>
 </section>
 
 <!-- ============ TOC ============ -->
-<section class="page body-page toc">
+<section class="body-page toc">
   <span class="eyebrow">Contents</span>
   <h2>What's inside.</h2>
 
@@ -471,8 +484,6 @@
     <li><span class="toc-num">06</span><span class="toc-title">Carrier Loyalty Through Fast, Reliable Pay</span></li>
     <li><span class="toc-num">07</span><span class="toc-title">Add Lanes Without Adding Headcount</span></li>
   </ol>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Contents</span></div>
 </section>
 
 <!-- ============ CH 01 OPENER ============ -->
@@ -485,7 +496,7 @@
 </section>
 
 <!-- ============ CH 01 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>The Real Reason Most Agents Stay Stuck</h2>
 
   <p>There's a moment in every experienced freight agent's career when effort stops being the issue.</p>
@@ -513,8 +524,6 @@
   <div class="callout next-move">
     <p>Spend 30 minutes this week writing down the three deals or accounts where the agency's process — not your effort — held you back in the last year. Quantify what those would have been worth if the friction wasn't there. <strong>That's your real ceiling.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 01</span></div>
 </section>
 
 <!-- ============ CH 02 OPENER ============ -->
@@ -527,7 +536,7 @@
 </section>
 
 <!-- ============ CH 02 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>Pre-Move: Protecting Your Customer Book</h2>
 
   <p>The single biggest fear we hear from agents thinking about a move: <em>"What if I lose customers in the transition?"</em></p>
@@ -564,10 +573,6 @@
     <p>You're not the project manager here. The moment you decide to move, your TAB Agent Development liaison sits down with you to build this audit <em>with</em> you — pulling templates, prepping spreadsheets, and structuring the data so nothing gets missed. We've run this process dozens of times. You only have to run it once.</p>
   </div>
 
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 02</span></div>
-</section>
-
-<section class="page body-page">
   <h3>Read your contract before you read anything else</h3>
   <p>Pull your current agent agreement. Read every word. Pay specific attention to:</p>
   <ul>
@@ -592,8 +597,6 @@
   <div class="callout next-move">
     <p>Build your pre-move audit before you do anything else. If you can't pull your top 20 customers' decision-maker contacts and last 12 months of margin data in under an hour, your agency has more leverage over your book than you realize. Or — get on a call with us, and <strong>we'll build it with you.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 02</span></div>
 </section>
 
 <!-- ============ CH 03 OPENER ============ -->
@@ -606,7 +609,7 @@
 </section>
 
 <!-- ============ CH 03 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>The Clean Transition Checklist</h2>
 
   <p>Most transitions fail in the same predictable ways: customers slip through the gap because credit lines aren't ready, carriers stop responding because invoicing got messy, or the agent burns out trying to run two systems for a month.</p>
@@ -635,11 +638,7 @@
     <li class="tab">Internal handoff plan owned by your Agent Development liaison, with TAB ops and accounting on standby</li>
   </ul>
 
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 03</span></div>
-</section>
-
-<section class="page body-page">
-  <div class="timeline-head" style="margin-top: 0;">T-Day · The move</div>
+  <div class="timeline-head">T-Day · The move</div>
   <ul class="checklist">
     <li class="you">Notice given to old agency in writing, per contract</li>
     <li class="tab">In-transit loads either delivered or formally handed off — TAB ops can backstop coverage if anything is at risk</li>
@@ -683,8 +682,6 @@
   <div class="callout next-move">
     <p>Print this checklist. If you decide to move, run it like a project plan with hard dates against every line item — and remember most of those dates aren't yours to drive. The agencies that lose 30% of an agent's book are the ones that wing it. <strong>The agencies that lose less than 5% are the ones with a real Agent Development team.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 03</span></div>
 </section>
 
 <!-- ============ CH 04 OPENER ============ -->
@@ -697,7 +694,7 @@
 </section>
 
 <!-- ============ CH 04 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>Diagnose Your Real Growth Bottleneck</h2>
 
   <p>Once you're past the transition, the real question is what to grow first.</p>
@@ -720,8 +717,6 @@
   <div class="callout next-move">
     <p>Pull last 12 months of data tonight. Calculate revenue by customer, gross margin by customer, and percent of total book by customer. <strong>The bottleneck will be obvious.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 04</span></div>
 </section>
 
 <!-- ============ CH 05 OPENER ============ -->
@@ -734,7 +729,7 @@
 </section>
 
 <!-- ============ CH 05 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>Quote Bigger with a Credit-Protected Pipeline</h2>
 
   <p>The single most underrated growth lever for experienced agents: how big you're willing to quote.</p>
@@ -767,8 +762,6 @@
   <div class="callout next-move">
     <p>This week, pick one customer in your book where you suspect there's 2x more spend you're not capturing. Quote them on the bigger version of the relationship. <strong>The worst answer is no, and the best answer doubles your account.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 05</span></div>
 </section>
 
 <!-- ============ CH 06 OPENER ============ -->
@@ -781,7 +774,7 @@
 </section>
 
 <!-- ============ CH 06 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>Carrier Loyalty Through Fast, Reliable Pay</h2>
 
   <p>Here's a number every agent should know: in this market, the strongest predictor of whether a carrier will haul for you again is how fast you paid them last time.</p>
@@ -813,8 +806,6 @@
   <div class="callout next-move">
     <p>Call your three highest-volume carriers this week and ask them to rate your pay experience. <strong>Their answer is your reputation in the market — and your future capacity.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 06</span></div>
 </section>
 
 <!-- ============ CH 07 OPENER ============ -->
@@ -827,7 +818,7 @@
 </section>
 
 <!-- ============ CH 07 BODY ============ -->
-<section class="page body-page">
+<section class="body-page">
   <h2>Add Lanes Without Adding Headcount</h2>
 
   <p>Every agent eventually hits the same wall: their business is at the limit of what they can run alone, but hiring an assistant feels expensive, complicated, and slow.</p>
@@ -865,8 +856,6 @@
   <div class="callout next-move">
     <p>Make a list of every operational task you handle in a week. Highlight the ones a competent agency back office should handle. Take that list to your agency. <strong>Their answer is the most important data point you'll get this quarter.</strong></p>
   </div>
-
-  <div class="page-foot"><span><strong>The Freight Agent Playbook</strong></span><span>Chapter 07</span></div>
 </section>
 
 <!-- ============ CLOSING ============ -->
