@@ -17,6 +17,8 @@ fi
 "$CHROME" \
   --headless=new \
   --disable-gpu \
+  --force-color-profile=srgb \
+  --default-color-profile=srgb \
   --no-pdf-header-footer \
   --virtual-time-budget=10000 \
   --print-to-pdf-no-header \
