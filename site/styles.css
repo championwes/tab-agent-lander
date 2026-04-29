@@ -458,6 +458,138 @@ h3 { font-size: 1.2rem; }
   border: 1px solid var(--line);
 }
 
+/* ============ IMAGE BAND (cinematic break) ============ */
+.image-band {
+  position: relative;
+  height: clamp(220px, 36vw, 360px);
+  overflow: hidden;
+  isolation: isolate;
+}
+.image-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.image-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(8, 40, 73, 0.55) 0%,
+      rgba(8, 40, 73, 0.35) 40%,
+      rgba(8, 40, 73, 0.85) 100%);
+  z-index: 1;
+}
+.image-band-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 24px;
+}
+.image-band-overlay .eyebrow {
+  background: rgba(95,215,228,0.18);
+  border: 1px solid rgba(95,215,228,0.35);
+  margin-bottom: 14px;
+}
+.image-band-overlay p {
+  max-width: 640px;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.92);
+  margin: 0;
+}
+
+/* ============ SPLIT INTRO ============ */
+.split-intro {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 50px;
+}
+@media (max-width: 880px) {
+  .split-intro { grid-template-columns: 1fr; gap: 28px; }
+}
+.split-intro-photo {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 3;
+}
+.split-intro-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+.split-intro-photo:hover img { transform: scale(1.02); }
+.split-intro-copy h2 { margin-bottom: 14px; }
+.split-intro-copy p {
+  color: var(--ink-2);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 56ch;
+}
+
+/* ============ TRANSITION HEAD (photo + copy) ============ */
+.transition-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 64px;
+}
+@media (max-width: 880px) {
+  .transition-head { grid-template-columns: 1fr; gap: 28px; }
+}
+.transition-head-copy h2 { margin-bottom: 14px; }
+.transition-head-copy p {
+  color: var(--ink-2);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 56ch;
+}
+.transition-head-photo {
+  margin: 0;
+  position: relative;
+}
+.transition-head-photo img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.transition-head-photo figcaption {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  padding: 10px 14px;
+  background: rgba(13, 59, 102, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
 /* ============ SECTIONS ============ */
 .section { padding: 90px 0; }
 .section.gray { background: var(--bg-soft); }
@@ -1234,8 +1366,37 @@ h3 { font-size: 1.2rem; }
     linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-2) 100%);
   color: #fff;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-.cta-wrap { max-width: 720px; margin: 0 auto; }
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.cta-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.18;
+  filter: saturate(0.85) blur(1px);
+}
+.cta-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(8, 40, 73, 0.92) 0%,
+      rgba(6, 32, 60, 0.96) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.cta-section .container { position: relative; z-index: 2; }
+.cta-wrap { max-width: 720px; margin: 0 auto; position: relative; z-index: 2; }
 .cta-section h2 { color: #fff; }
 .cta-section p {
   color: rgba(255,255,255,0.78);
