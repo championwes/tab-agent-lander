@@ -1002,11 +1002,12 @@ h3 { font-size: 1.2rem; }
 }
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 920px;
+  margin: 0 auto;
 }
-@media (max-width: 880px) { .testimonial-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .testimonial-grid { grid-template-columns: 1fr; } }
+@media (max-width: 540px) { .testimonial-grid { grid-template-columns: 1fr; } }
 
 .testimonial-card {
   background: rgba(255,255,255,0.03);
