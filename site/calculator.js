@@ -149,7 +149,7 @@ async function submitLead(form, endpoint, extraPayload = {}) {
   } catch (err) {
     btn.textContent = originalText;
     btn.disabled = false;
-    alert("Something went wrong — please email Brian@tab-llc.com directly.");
+    alert("Something went wrong — please email agents@tab-llc.com directly.");
   }
 }
 
