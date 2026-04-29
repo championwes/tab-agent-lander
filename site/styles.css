@@ -984,11 +984,14 @@ h3 { font-size: 1.2rem; }
 .quote-wrap blockquote::after  { content: "\201D"; }
 .quote-attr {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
 }
-.quote-attr strong { color: var(--cyan); font-size: 0.95rem; }
-.quote-attr span { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+.quote-attr strong { color: var(--cyan); font-weight: 600; }
+.quote-attr span { color: rgba(255,255,255,0.7); }
 
 /* Testimonial gallery */
 .testimonials {
