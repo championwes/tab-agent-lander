@@ -883,11 +883,30 @@ h3 { font-size: 1.2rem; }
   border-radius: 4px var(--radius-lg) var(--radius-lg) 4px;
   padding: 38px 38px 38px 50px;
   color: #fff;
-  box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
   transform: rotate(-2deg);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow:
+    /* Stacked page slivers behind the cover */
+    3px 3px 0 -2px #f4ecd8,
+    3px 3px 0 -1px rgba(0, 0, 0, 0.10),
+    6px 6px 0 -3px #ebe2cc,
+    6px 6px 0 -2px rgba(0, 0, 0, 0.10),
+    9px 9px 0 -4px #e2d8be,
+    9px 9px 0 -3px rgba(0, 0, 0, 0.10),
+    /* Main drop shadow */
+    0 25px 60px rgba(13, 59, 102, 0.18);
+}
+.playbook-cover:hover {
+  box-shadow:
+    3px 3px 0 -2px #f4ecd8,
+    3px 3px 0 -1px rgba(0, 0, 0, 0.10),
+    6px 6px 0 -3px #ebe2cc,
+    6px 6px 0 -2px rgba(0, 0, 0, 0.10),
+    9px 9px 0 -4px #e2d8be,
+    9px 9px 0 -3px rgba(0, 0, 0, 0.10),
+    0 30px 70px rgba(13, 59, 102, 0.24);
 }
 .playbook-cover:hover { transform: rotate(0deg); }
 
