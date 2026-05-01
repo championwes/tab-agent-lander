@@ -14,6 +14,7 @@ Thumbs.db
 
 # …but the generated playbook ships with the site
 !playbook/playbook.pdf
+!site/playbook.pdf
 !site/assets/playbook.pdf
 
 # Source imagery — optimized versions live in site/assets/
