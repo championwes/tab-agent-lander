@@ -74,7 +74,7 @@
   <ul class="hero-proof">
     <li><strong>22</strong><span>years in business</span></li>
     <li><strong>A+</strong><span>financial rating</span></li>
-    <li><strong>100%</strong><span>2-yr agent retention</span></li>
+    <li><strong>100%</strong><span>agent retention</span></li>
     <li><strong>92%</strong><span>of agents grew last 2 yrs</span></li>
   </ul>
   </div><!-- /container -->
@@ -105,30 +105,41 @@
     <div class="calc-grid">
       <form id="calc-form" class="calc-form" novalidate>
         <div class="field">
-          <label for="annualRevenue">Your annual customer revenue</label>
+          <label for="annualRevenue">
+            Your annual customer revenue
+            <span class="info-tip" tabindex="0" aria-label="See definitions">
+              <span class="info-tip-icon" aria-hidden="true">ⓘ</span>
+              <span class="info-tip-content" role="tooltip">
+                <strong>Revenue</strong> — total amount you bill your customers.<br/>
+                <strong>Gross profit</strong> — revenue minus what you pay carriers.<br/>
+                <strong>Margin</strong> — gross profit ÷ revenue (industry blend ≈ 15%).
+              </span>
+            </span>
+          </label>
           <div class="input-prefix">
             <span>$</span>
             <input type="number" id="annualRevenue" min="0" step="100000" value="6000000" required />
           </div>
-          <small><strong>Top-line revenue you bill customers</strong> — not gross profit. This is what TAB tiers off of.</small>
+          <small>Top-line revenue (amount you bill your customers, not gross profit). This is what TAB bases your tier on.</small>
         </div>
 
         <div class="field">
           <label for="region">Where are you based?</label>
-          <select id="region" class="select">
-            <option value="domestic" selected>USA</option>
+          <select id="region" class="select" required>
+            <option value="" disabled selected>Select a region…</option>
+            <option value="domestic">USA</option>
             <option value="international">International</option>
           </select>
-          <small>USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60%.</small>
+          <small id="region-help">USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60% (locked).</small>
         </div>
 
         <div class="field">
           <label for="currentSplit">Your current commission split</label>
           <div class="input-suffix">
-            <input type="number" id="currentSplit" min="1" max="100" step="1" value="60" required />
+            <input type="number" id="currentSplit" min="1" max="100" step="1" placeholder="e.g. 60" required />
             <span>%</span>
           </div>
-          <small>Most agents fall between 50% and 70%.</small>
+          <small id="currentSplit-help">Most agents fall between 50% and 70%.</small>
         </div>
 
         <div class="field">
@@ -192,7 +203,7 @@
             <input type="text" name="company" placeholder="Current agency / company" />
           </div>
           <button type="submit" class="btn btn-primary btn-block">Send my report</button>
-          <p class="form-note">No spam. We'll send the breakdown and someone from TAB leadership will reach out.</p>
+          <p class="form-note">Use a personal email — we'll send your custom report there. No spam.</p>
         </form>
       </div>
     </div>
@@ -209,8 +220,8 @@
     <div class="grid-4">
       <div class="card-feature">
         <div class="card-icon">01</div>
-        <h3>Tiers that grow with you</h3>
-        <p>65% → 70% → 75% → 80% as your customer revenue scales. <strong>Automatic.</strong> No annual negotiation, no leaving for a raise. The structure has never changed in 22 years.</p>
+        <h3>Industry-leading commission tiers</h3>
+        <p><strong>Up to 80%</strong> for domestic agents (65% → 70% → 75% → 80% as your customer revenue scales). <strong>Flat 60%</strong> for international agents. No annual negotiation. No leaving for a raise. The structure hasn't changed in 22 years — because it works.</p>
       </div>
       <div class="card-feature">
         <div class="card-icon">02</div>
@@ -220,7 +231,7 @@
       <div class="card-feature">
         <div class="card-icon">03</div>
         <h3>Agent Development team</h3>
-        <p>Most agencies have an onboarding team and then "good luck." TAB has an Agent Development team that fights your internal battles — credit limits, customer setups, escalations — so you can stay on the phone selling.</p>
+        <p>Most agencies have an onboarding team and then "good luck." TAB has an Agent Development team that handles credit limits, customer setups, and escalations — so you can focus on growing your book of business.</p>
       </div>
       <div class="card-feature">
         <div class="card-icon">04</div>
@@ -239,9 +250,9 @@
       <h2>The numbers we publish — because we can.</h2>
     </div>
     <div class="grid-stats">
-      <div class="stat-card"><strong>100%</strong><span>2-year agent retention</span></div>
+      <div class="stat-card"><strong>100%</strong><span>agent retention</span></div>
       <div class="stat-card"><strong>92%</strong><span>of agents grew in the past 2 years</span></div>
-      <div class="stat-card"><strong>&lt; 5%</strong><span>customers lost in transition</span></div>
+      <div class="stat-card"><strong>&lt; 2%</strong><span>customer conflict ratio in transition</span></div>
       <div class="stat-card"><strong>$250K → $12M</strong><span>top agent growth in 5 years</span></div>
     </div>
   </div>
@@ -285,8 +296,10 @@
           <li>Claims management</li>
           <li>Cargo &amp; liability insurance, surety bond</li>
           <li>Compliance, contracts, MyCarrierPortal vetting</li>
-          <li>Tech stack (Ditat, DAT, Truckstop, ZoomInfo, Carrier Assure)</li>
-          <li>24/7 operational support &amp; load coverage</li>
+          <li>Tech stack (Ditat TMS, DAT, Truckstop, ZoomInfo, Carrier Assure)</li>
+          <li>24/7 operational support when you need it — assistive, not a substitute for the agent</li>
+          <li>Fast assistant onboarding — background checks, system access, and training so your new hires can start producing in days, not weeks</li>
+          <li>Operate under TAB's authority, insurance, and professional phone/email system — not your personal cell</li>
         </ul>
       </div>
     </div>
@@ -327,7 +340,7 @@
         <p>Once you're live, automatic tier raises, asset access, and back-office leverage remove the solo ceiling. Agents have scaled from $250K to $12M+ in five years.</p>
       </div>
     </div>
-    <p class="section-foot">Less than 5% of customers are lost in TAB transitions — vs. an industry where converting even 70% of a "fully committed" book is considered a win.</p>
+    <p class="section-foot">Less than 2% customer conflict ratio in TAB transitions — vs. an industry where converting even 70% of a "fully committed" book is considered a win.</p>
   </div>
 </section>
 
@@ -343,7 +356,7 @@
           <span>02 · Pre-move: protecting your customer book</span>
           <span>03 · The clean transition checklist</span>
           <span>04 · Diagnose your real growth bottleneck</span>
-          <span>05 · Quote bigger with credit-protected pipeline</span>
+          <span>05 · Quote bigger with TAB's credit backing behind every load</span>
           <span>06 · Carrier loyalty through fast, reliable pay</span>
           <span>07 · Add lanes without adding headcount</span>
         </div>
@@ -356,14 +369,14 @@
       <form id="playbook-form" class="lead-form bordered">
         <div class="lead-row">
           <input type="text" name="name" placeholder="Full name" required />
-          <input type="email" name="email" placeholder="Work email" required />
+          <input type="email" name="email" placeholder="Personal email" required />
         </div>
         <div class="lead-row">
           <input type="text" name="company" placeholder="Current agency / company" />
           <input type="number" name="years" placeholder="Years as a freight agent" min="0" />
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Send me the playbook</button>
-        <p class="form-note">PDF will hit your inbox in under a minute.</p>
+        <p class="form-note">Use a personal email — the PDF will hit your inbox in under a minute.</p>
       </form>
     </div>
   </div>
@@ -482,7 +495,7 @@
       </details>
       <details>
         <summary>Will I lose customers when I transition?</summary>
-        <p>Less than 5% of customers are lost in TAB transitions. Most agencies are happy if 70% of a "fully committed" book actually converts. The difference is our Agent Development team — we sit with you through customer onboarding, credit setup (1–2 hours per account), and your first loads, instead of handing you a portal and wishing you luck.</p>
+        <p>Less than 2% customer conflict ratio in TAB transitions. Most agencies are happy if 70% of a "fully committed" book actually converts. The difference is our Agent Development team — we sit with you through customer onboarding, credit setup (1–2 hours per account), and your first loads, instead of handing you a portal and wishing you luck.</p>
       </details>
       <details>
         <summary>Why is the calculator based on revenue and not gross profit?</summary>
@@ -490,11 +503,11 @@
       </details>
       <details>
         <summary>What do I actually need to get started?</summary>
-        <p>A computer, a phone, high-speed internet, transportation experience, and a customer book of business. Everything else — TMS, load boards, lead data, insurance, surety bond, authority, billing, claims — is on TAB.</p>
+        <p>A computer, a phone, high-speed internet, transportation experience, and a customer book of business. Everything else — TMS, carrier load boards, B2B data intelligence tools (at reduced cost), insurance, surety bond, authority, billing, claims — is on TAB. <em>Note: TAB does not provide customer leads.</em></p>
       </details>
       <details>
         <summary>What is the Agent Development team and why does it matter?</summary>
-        <p>It's a dedicated team that advocates for you internally — fighting for credit limits with accounting, escalating customer issues, helping you navigate the system in your first weeks. Most agencies have an onboarding team and then "good luck, email us." TAB built the Agent Development team because we kept hearing from agents that real, ongoing support was the thing they were missing everywhere else.</p>
+        <p>It's a dedicated team that handles credit limits, customer setups, and escalations on your behalf — and helps you navigate the system in your first weeks. Most agencies have an onboarding team and then "good luck, email us." TAB built the Agent Development team because we kept hearing from agents that real, ongoing support was the thing they were missing everywhere else.</p>
       </details>
       <details>
         <summary>Who do I report to day-to-day?</summary>
@@ -541,6 +554,7 @@
     </div>
     <div class="footer-meta">
       <span>&copy; <span id="year"></span> TAB LLC. All rights reserved.</span>
+      <span class="footer-disclaimer">International agents earn a flat 60% commission. Tiered scale (65%–80%) applies to USA-based agents only.</span>
     </div>
   </div>
 </footer>

@@ -85,15 +85,37 @@ const numbersBox = resultBox.querySelector(".calc-numbers");
 const leadFormBox = $("#lead-form");
 const placeholderText = resultBox.querySelector(".calc-result-head .muted");
 
+/* Region dropdown drives the current-split helper.
+   - International selected → TAB pays flat 60% regardless of input; flag this in the helper.
+   - Domestic selected     → standard helper text. */
+const regionSelect = $("#region");
+const splitInput = $("#currentSplit");
+const splitHelp = $("#currentSplit-help");
+const splitHelpDomestic = "Most agents fall between 50% and 70%.";
+const splitHelpIntl =
+  "International agents earn a flat 60% at TAB regardless of current split. Enter your current split to see the comparison.";
+
+regionSelect.addEventListener("change", () => {
+  if (regionSelect.value === "international") {
+    splitHelp.textContent = splitHelpIntl;
+  } else {
+    splitHelp.textContent = splitHelpDomestic;
+  }
+});
+
 calcForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const annualRevenue = Number($("#annualRevenue").value) || 0;
-  const region = $("#region").value || "domestic";
+  const region = $("#region").value;
   const currentSplit = Number($("#currentSplit").value) || 0;
   const gpMarginPct = Number($("#gpMargin").value) || 0;
   const gpMargin = gpMarginPct > 0 ? gpMarginPct / 100 : ASSUMED_GP_MARGIN;
 
+  if (!region) {
+    regionSelect.focus();
+    return;
+  }
   if (annualRevenue <= 0 || currentSplit <= 0) return;
 
   const r = calculate({ annualRevenue, region, currentSplit, gpMargin });
