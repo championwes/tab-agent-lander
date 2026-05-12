@@ -195,6 +195,17 @@ document.addEventListener("submit", (e) => {
    ============================================ */
 document.getElementById("year").textContent = new Date().getFullYear();
 
+/* Testimonial videos — toggle a blue overlay on each card until it plays.
+   The overlay sits on .testimonial-thumb::before and is faded out when
+   the wrapper carries the .is-playing class. */
+document.querySelectorAll(".testimonial-video").forEach((video) => {
+  const thumb = video.closest(".testimonial-thumb");
+  if (!thumb) return;
+  video.addEventListener("play", () => thumb.classList.add("is-playing"));
+  video.addEventListener("pause", () => thumb.classList.remove("is-playing"));
+  video.addEventListener("ended", () => thumb.classList.remove("is-playing"));
+});
+
 /* Testimonial gallery — scroll-snap carousel with arrows + dots */
 (function () {
   const track = document.getElementById("testimonial-track");
