@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
   const inputs = body.inputs || {};
   const results = body.results || {};
 
-  const siteUrl = env.SITE_URL || DEFAULTS.SITE_URL;
+  const siteUrl = env.SITE_URL || new URL(request.url).origin || DEFAULTS.SITE_URL;
   const notifyTo = env.NOTIFY_EMAIL || DEFAULTS.NOTIFY_EMAIL;
   const fromEmail = env.FROM_EMAIL || DEFAULTS.FROM_EMAIL;
   const replyTo = extractAddress(fromEmail);
@@ -75,6 +75,7 @@ function leadHtml({ name, inputs, results, siteUrl }) {
   const lift = results.delta != null ? fmtUsd(results.delta) : "—";
   const liftPct =
     results.liftPct != null ? `${results.liftPct >= 0 ? "+" : ""}${results.liftPct.toFixed(0)}%` : "";
+  const pdfUrl = `${siteUrl.replace(/\/$/, "")}/playbook.pdf`;
 
   return baseShell(`
     <p>Hi ${firstName},</p>
@@ -92,7 +93,18 @@ function leadHtml({ name, inputs, results, siteUrl }) {
       </tbody>
     </table>
     <p style="font-size:13px;color:#6b7280;"><strong>For illustration only.</strong> Based on TAB's published commission tiers and a 15% historical industry margin — not a guaranteed offer.</p>
-    <p style="margin:22px 0;">Want to talk it through? Mark, Brian, or Chad will follow up directly — or grab a slot:<br/>
+
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:28px 0;" />
+    <h3 style="margin:0 0 10px;color:#0d3b66;font-size:17px;">While you're here — grab the Growth Playbook</h3>
+    <p>The companion PDF to your projection. How TAB agents protect their book on the way in and scale past their solo ceiling once they're settled.</p>
+    <p style="margin:18px 0 28px;">
+      <a href="${escapeHtml(pdfUrl)}"
+         style="display:inline-block;background:#0d3b66;color:#ffffff;font-weight:600;text-decoration:none;padding:12px 20px;border-radius:6px;">
+        Download the Growth Playbook (PDF)
+      </a>
+    </p>
+
+    <p style="margin:22px 0;">Want to talk through your numbers? Mark, Brian, or Chad will follow up directly — or grab a slot:<br/>
       <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6">Book a discovery call</a>
     </p>
     <p>Talk soon,<br/>The TAB team</p>

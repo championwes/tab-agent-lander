@@ -32,7 +32,7 @@ export async function onRequestPost(context) {
   const company = (body.company || "").toString().trim();
   const years = (body.years || "").toString().trim();
 
-  const siteUrl = env.SITE_URL || DEFAULTS.SITE_URL;
+  const siteUrl = env.SITE_URL || new URL(request.url).origin || DEFAULTS.SITE_URL;
   const notifyTo = env.NOTIFY_EMAIL || DEFAULTS.NOTIFY_EMAIL;
   const fromEmail = env.FROM_EMAIL || DEFAULTS.FROM_EMAIL;
   const replyTo = extractAddress(fromEmail);
