@@ -1250,6 +1250,7 @@ h3 { font-size: 1.2rem; }
 .testimonial-track .testimonial-card {
   scroll-snap-align: start;
   min-width: 0;
+  overflow: hidden;
 }
 @media (max-width: 880px) {
   .testimonial-track { grid-auto-columns: calc((100% - 18px) / 2); }
@@ -1304,6 +1305,9 @@ h3 { font-size: 1.2rem; }
 .testimonial-video {
   display: block;
   width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-width: 0;
   aspect-ratio: 16 / 9;
   background: var(--navy-deep);
   object-fit: cover;
