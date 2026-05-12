@@ -80,7 +80,7 @@ function leadHtml({ name, pdfUrl, siteUrl }) {
         Download the playbook (PDF)
       </a>
     </p>
-    <p>If you'd rather skip ahead, our leadership team (Mark, Brian, Chad) does discovery calls personally — no recruiter pitch. Reply to this email or grab a slot here:<br/>
+    <p>If you'd rather skip ahead, Mark — our Director of Agency Opportunities — does discovery calls personally. No recruiter pitch. Reply to this email or grab a slot here:<br/>
       <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6">Book a discovery call</a>
     </p>
     <p>Talk soon,<br/>The TAB team</p>

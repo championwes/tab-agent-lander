@@ -104,7 +104,7 @@ function leadHtml({ name, inputs, results, siteUrl }) {
       </a>
     </p>
 
-    <p style="margin:22px 0;">Want to talk through your numbers? Mark, Brian, or Chad will follow up directly — or grab a slot:<br/>
+    <p style="margin:22px 0;">Want to talk through your numbers? Mark — our Director of Agency Opportunities — will follow up directly. You can also grab a slot here:<br/>
       <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6">Book a discovery call</a>
     </p>
     <p>Talk soon,<br/>The TAB team</p>

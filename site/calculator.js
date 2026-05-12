@@ -165,7 +165,7 @@ async function submitLead(form, endpoint, extraPayload = {}) {
     form.innerHTML = `
       <div class="lead-success">
         <h4>You're in.</h4>
-        <p>Check your inbox in the next minute. Mark, Brian, or Chad will follow up personally — no auto-pilot recruiter pitch.</p>
+        <p>Check your inbox in the next minute. Mark, our Director of Agency Opportunities, will follow up personally — no auto-pilot recruiter pitch.</p>
       </div>
     `;
   } catch (err) {
