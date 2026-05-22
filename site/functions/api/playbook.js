@@ -31,6 +31,8 @@ export async function onRequestPost(context) {
 
   const company = (body.company || "").toString().trim();
   const years = (body.years || "").toString().trim();
+  const attribution = body.attribution || {};
+  const pageUrl = (body.pageUrl || "").toString();
 
   const siteUrl = env.SITE_URL || new URL(request.url).origin || DEFAULTS.SITE_URL;
   const notifyTo = env.NOTIFY_EMAIL || DEFAULTS.NOTIFY_EMAIL;
@@ -54,7 +56,7 @@ export async function onRequestPost(context) {
     to: notifyTo,
     subject: `New playbook download — ${name}`,
     replyTo: email,
-    html: notifyHtml({ name, email, company, years }),
+    html: notifyHtml({ name, email, company, years, attribution, pageUrl }),
   });
 
   await Promise.all([leadEmail, notifyEmail]);
@@ -92,7 +94,7 @@ function leadHtml({ name, pdfUrl, siteUrl }) {
   `);
 }
 
-function notifyHtml({ name, email, company, years }) {
+function notifyHtml({ name, email, company, years, attribution, pageUrl }) {
   return baseShell(`
     <h2 style="margin:0 0 14px;color:#0d3b66;">Playbook download</h2>
     <table style="border-collapse:collapse;width:100%;font-size:14px;">
@@ -103,7 +105,24 @@ function notifyHtml({ name, email, company, years }) {
         ${row("Years as agent", years || "—")}
       </tbody>
     </table>
+    ${attributionBlock(attribution, pageUrl)}
   `);
+}
+
+function attributionBlock(attribution, pageUrl) {
+  const a = attribution || {};
+  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "li_fat_id", "gclid"];
+  const present = keys.filter((k) => a[k]);
+  if (!present.length && !pageUrl) return "";
+  return `
+    <h3 style="margin:24px 0 10px;color:#0d3b66;font-size:15px;">Attribution</h3>
+    <table style="border-collapse:collapse;width:100%;font-size:14px;">
+      <tbody>
+        ${present.map((k) => row(k, escapeHtml(a[k]))).join("")}
+        ${pageUrl ? row("Landing URL", `<a href="${escapeHtml(pageUrl)}">${escapeHtml(pageUrl)}</a>`) : ""}
+      </tbody>
+    </table>
+  `;
 }
 
 function row(label, value) {

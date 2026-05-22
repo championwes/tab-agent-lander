@@ -145,10 +145,33 @@ calcForm.addEventListener("submit", (e) => {
 /* ============================================
    Lead form submissions
    ============================================ */
-async function submitLead(form, endpoint, extraPayload = {}) {
+/* Capture UTM + click-id params on page load so we can attach them to
+   every form submission. Powers ad-attribution in the lead notifications. */
+const ATTRIBUTION_PARAMS = (() => {
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "li_fat_id", "gclid"];
+    const out = {};
+    for (const k of keys) {
+      const v = sp.get(k);
+      if (v) out[k] = v;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+})();
+
+async function submitLead(form, endpoint, { thanksUrl, ...extraPayload } = {}) {
   const fd = new FormData(form);
   const data = Object.fromEntries(fd.entries());
-  const payload = { ...data, ...extraPayload, submittedAt: new Date().toISOString() };
+  const payload = {
+    ...data,
+    ...extraPayload,
+    attribution: ATTRIBUTION_PARAMS,
+    pageUrl: window.location.href,
+    submittedAt: new Date().toISOString(),
+  };
 
   const btn = form.querySelector("button[type=submit]");
   const originalText = btn.textContent;
@@ -162,6 +185,11 @@ async function submitLead(form, endpoint, extraPayload = {}) {
       body: JSON.stringify(payload),
     }).catch(() => null);
 
+    if (thanksUrl) {
+      window.location.href = thanksUrl;
+      return;
+    }
+
     form.innerHTML = `
       <div class="lead-success">
         <h4>You're in.</h4>
@@ -171,7 +199,7 @@ async function submitLead(form, endpoint, extraPayload = {}) {
   } catch (err) {
     btn.textContent = originalText;
     btn.disabled = false;
-    alert("Something went wrong — please email agents@tab-llc.com directly.");
+    alert("Something went wrong — please email agents@growwithtab.com directly.");
   }
 }
 
@@ -181,12 +209,19 @@ document.addEventListener("submit", (e) => {
     const calcPayload = resultBox.dataset.payload
       ? JSON.parse(resultBox.dataset.payload)
       : {};
-    submitLead(e.target, LEAD_ENDPOINT, { source: "calculator", ...calcPayload });
+    submitLead(e.target, LEAD_ENDPOINT, {
+      source: "calculator",
+      thanksUrl: "/thanks/calculator",
+      ...calcPayload,
+    });
   }
 
   if (e.target.id === "playbook-form") {
     e.preventDefault();
-    submitLead(e.target, PLAYBOOK_ENDPOINT, { source: "playbook" });
+    submitLead(e.target, PLAYBOOK_ENDPOINT, {
+      source: "playbook",
+      thanksUrl: "/thanks/playbook",
+    });
   }
 });
 

@@ -35,6 +35,8 @@ export async function onRequestPost(context) {
   const company = (body.company || "").toString().trim();
   const inputs = body.inputs || {};
   const results = body.results || {};
+  const attribution = body.attribution || {};
+  const pageUrl = (body.pageUrl || "").toString();
 
   const siteUrl = env.SITE_URL || new URL(request.url).origin || DEFAULTS.SITE_URL;
   const notifyTo = env.NOTIFY_EMAIL || DEFAULTS.NOTIFY_EMAIL;
@@ -54,7 +56,7 @@ export async function onRequestPost(context) {
     to: notifyTo,
     subject: `New calculator lead — ${name}${results.delta ? ` (+${fmtUsd(results.delta)} lift)` : ""}`,
     replyTo: email,
-    html: notifyHtml({ name, email, phone, company, inputs, results }),
+    html: notifyHtml({ name, email, phone, company, inputs, results, attribution, pageUrl }),
   });
 
   await Promise.all([leadEmail, notifyEmail]);
@@ -113,7 +115,7 @@ function leadHtml({ name, inputs, results, siteUrl }) {
   `);
 }
 
-function notifyHtml({ name, email, phone, company, inputs, results }) {
+function notifyHtml({ name, email, phone, company, inputs, results, attribution, pageUrl }) {
   const tabSplitPct = results.tabSplit ? `${Math.round(results.tabSplit * 100)}%` : "—";
   const liftPct =
     results.liftPct != null ? `${results.liftPct >= 0 ? "+" : ""}${results.liftPct.toFixed(0)}%` : "";
@@ -140,7 +142,24 @@ function notifyHtml({ name, email, phone, company, inputs, results }) {
         ${row("Annual lift", `<strong>+${fmtUsd(results.delta)} ${liftPct}</strong>`)}
       </tbody>
     </table>
+    ${attributionBlock(attribution, pageUrl)}
   `);
+}
+
+function attributionBlock(attribution, pageUrl) {
+  const a = attribution || {};
+  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "li_fat_id", "gclid"];
+  const present = keys.filter((k) => a[k]);
+  if (!present.length && !pageUrl) return "";
+  return `
+    <h3 style="margin:24px 0 10px;color:#0d3b66;font-size:15px;">Attribution</h3>
+    <table style="border-collapse:collapse;width:100%;font-size:14px;">
+      <tbody>
+        ${present.map((k) => row(k, escapeHtml(a[k]))).join("")}
+        ${pageUrl ? row("Landing URL", `<a href="${escapeHtml(pageUrl)}">${escapeHtml(pageUrl)}</a>`) : ""}
+      </tbody>
+    </table>
+  `;
 }
 
 function row(label, value) {
