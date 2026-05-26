@@ -162,7 +162,7 @@ const ATTRIBUTION_PARAMS = (() => {
   }
 })();
 
-async function submitLead(form, endpoint, { thanksUrl, ...extraPayload } = {}) {
+async function submitLead(form, endpoint, extraPayload = {}) {
   const fd = new FormData(form);
   const data = Object.fromEntries(fd.entries());
   const payload = {
@@ -185,11 +185,6 @@ async function submitLead(form, endpoint, { thanksUrl, ...extraPayload } = {}) {
       body: JSON.stringify(payload),
     }).catch(() => null);
 
-    if (thanksUrl) {
-      window.location.href = thanksUrl;
-      return;
-    }
-
     form.innerHTML = `
       <div class="lead-success">
         <h4>You're in.</h4>
@@ -209,19 +204,12 @@ document.addEventListener("submit", (e) => {
     const calcPayload = resultBox.dataset.payload
       ? JSON.parse(resultBox.dataset.payload)
       : {};
-    submitLead(e.target, LEAD_ENDPOINT, {
-      source: "calculator",
-      thanksUrl: "/thanks/calculator",
-      ...calcPayload,
-    });
+    submitLead(e.target, LEAD_ENDPOINT, { source: "calculator", ...calcPayload });
   }
 
   if (e.target.id === "playbook-form") {
     e.preventDefault();
-    submitLead(e.target, PLAYBOOK_ENDPOINT, {
-      source: "playbook",
-      thanksUrl: "/thanks/playbook",
-    });
+    submitLead(e.target, PLAYBOOK_ENDPOINT, { source: "playbook" });
   }
 });
 
