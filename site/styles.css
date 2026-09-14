@@ -183,6 +183,8 @@ h3 { font-size: 1.2rem; }
 @media (max-width: 920px) {
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
 }
+/* Single-column hero (used while the earnings preview / calculator is pulled) */
+.hero-grid--solo { grid-template-columns: 1fr; max-width: 760px; }
 .hero-copy h1 {
   font-size: clamp(1.9rem, 3.6vw, 2.9rem);
   line-height: 1.08;

@@ -80,67 +80,67 @@ function calculate({ annualRevenue, region, currentSplit, gpMargin }) {
    Calculator wiring
    ============================================ */
 const calcForm = $("#calc-form");
-const resultBox = $("#calc-result");
-const numbersBox = resultBox.querySelector(".calc-numbers");
-const leadFormBox = $("#lead-form");
-const placeholderText = resultBox.querySelector(".calc-result-head .muted");
 
-/* Region dropdown drives the current-split helper.
-   - International selected → TAB pays flat 60% regardless of input; flag this in the helper.
-   - Domestic selected     → standard helper text. */
-const regionSelect = $("#region");
-const splitInput = $("#currentSplit");
-const splitHelp = $("#currentSplit-help");
-const splitHelpDomestic = "Most agents fall between 50% and 70%.";
-const splitHelpIntl =
-  "International agents earn a flat 60% at TAB regardless of current split. Enter your current split to see the comparison.";
+/* Calculator wiring — only runs when the calculator is present on the page. */
+if (calcForm) {
+  const resultBox = $("#calc-result");
+  const numbersBox = resultBox.querySelector(".calc-numbers");
+  const leadFormBox = $("#lead-form");
+  const placeholderText = resultBox.querySelector(".calc-result-head .muted");
 
-regionSelect.addEventListener("change", () => {
-  if (regionSelect.value === "international") {
-    splitHelp.textContent = splitHelpIntl;
-  } else {
-    splitHelp.textContent = splitHelpDomestic;
-  }
-});
+  /* Region dropdown drives the current-split helper.
+     - International selected → TAB pays flat 60% regardless of input; flag this in the helper.
+     - Domestic selected     → standard helper text. */
+  const regionSelect = $("#region");
+  const splitHelp = $("#currentSplit-help");
+  const splitHelpDomestic = "Most agents fall between 50% and 70%.";
+  const splitHelpIntl =
+    "International agents earn a flat 60% at TAB regardless of current split. Enter your current split to see the comparison.";
 
-calcForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const annualRevenue = Number($("#annualRevenue").value) || 0;
-  const region = $("#region").value;
-  const currentSplit = Number($("#currentSplit").value) || 0;
-  const gpMarginPct = Number($("#gpMargin").value) || 0;
-  const gpMargin = gpMarginPct > 0 ? gpMarginPct / 100 : ASSUMED_GP_MARGIN;
-
-  if (!region) {
-    regionSelect.focus();
-    return;
-  }
-  if (annualRevenue <= 0 || currentSplit <= 0) return;
-
-  const r = calculate({ annualRevenue, region, currentSplit, gpMargin });
-
-  $("#r-tier").textContent = `${Math.round(r.tabSplit * 100)}% — ${r.tierLabel}`;
-  $("#r-gp").textContent = `${fmt(r.grossProfit)} (at ${Math.round(r.margin * 100)}% margin)`;
-  $("#r-current").textContent = fmt(r.currentTake);
-  $("#r-tab").textContent = fmt(r.tabTake);
-
-  const deltaSign = r.delta >= 0 ? "+" : "−";
-  $("#r-delta").textContent = `${deltaSign}${fmt(Math.abs(r.delta))} / year`;
-  // (label above already reads "You'd earn an additional")
-  $("#r-pct").textContent = `${r.liftPct >= 0 ? "+" : ""}${r.liftPct.toFixed(0)}%`;
-
-  numbersBox.hidden = false;
-  leadFormBox.hidden = false;
-  if (placeholderText) placeholderText.style.display = "none";
-
-  resultBox.dataset.payload = JSON.stringify({
-    inputs: { annualRevenue, region, currentSplit, gpMarginPct: gpMarginPct || 15 },
-    results: r,
+  regionSelect.addEventListener("change", () => {
+    splitHelp.textContent =
+      regionSelect.value === "international" ? splitHelpIntl : splitHelpDomestic;
   });
 
-  resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
-});
+  calcForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const annualRevenue = Number($("#annualRevenue").value) || 0;
+    const region = $("#region").value;
+    const currentSplit = Number($("#currentSplit").value) || 0;
+    const gpMarginPct = Number($("#gpMargin").value) || 0;
+    const gpMargin = gpMarginPct > 0 ? gpMarginPct / 100 : ASSUMED_GP_MARGIN;
+
+    if (!region) {
+      regionSelect.focus();
+      return;
+    }
+    if (annualRevenue <= 0 || currentSplit <= 0) return;
+
+    const r = calculate({ annualRevenue, region, currentSplit, gpMargin });
+
+    $("#r-tier").textContent = `${Math.round(r.tabSplit * 100)}% — ${r.tierLabel}`;
+    $("#r-gp").textContent = `${fmt(r.grossProfit)} (at ${Math.round(r.margin * 100)}% margin)`;
+    $("#r-current").textContent = fmt(r.currentTake);
+    $("#r-tab").textContent = fmt(r.tabTake);
+
+    const deltaSign = r.delta >= 0 ? "+" : "−";
+    $("#r-delta").textContent = `${deltaSign}${fmt(Math.abs(r.delta))} / year`;
+    // (label above already reads "You'd earn an additional")
+    $("#r-pct").textContent = `${r.liftPct >= 0 ? "+" : ""}${r.liftPct.toFixed(0)}%`;
+
+    numbersBox.hidden = false;
+    leadFormBox.hidden = false;
+    if (placeholderText) placeholderText.style.display = "none";
+
+    resultBox.dataset.payload = JSON.stringify({
+      inputs: { annualRevenue, region, currentSplit, gpMarginPct: gpMarginPct || 15 },
+      results: r,
+    });
+
+    resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+}
 
 /* ============================================
    Lead form submissions
@@ -199,14 +199,6 @@ async function submitLead(form, endpoint, extraPayload = {}) {
 }
 
 document.addEventListener("submit", (e) => {
-  if (e.target.id === "lead-form") {
-    e.preventDefault();
-    const calcPayload = resultBox.dataset.payload
-      ? JSON.parse(resultBox.dataset.payload)
-      : {};
-    submitLead(e.target, LEAD_ENDPOINT, { source: "calculator", ...calcPayload });
-  }
-
   if (e.target.id === "playbook-form") {
     e.preventDefault();
     submitLead(e.target, PLAYBOOK_ENDPOINT, { source: "playbook" });

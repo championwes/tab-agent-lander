@@ -4,14 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TAB Freight Agent Program | Up to 80% Commission, Asset-Backed</title>
-<meta name="description" content="Independent freight agents at TAB keep up to 80% of gross profit, get 24/7 ops support, and access nearly 900 trucks and 4,000 trailers through Artur Express. Calculate your commission lift." />
+<meta name="description" content="Independent freight agents at TAB keep up to 80% of gross profit, get 24/7 ops support, and access nearly 900 trucks and 4,000 trailers through Artur Express." />
 <meta property="og:title" content="TAB Freight Agent Program — Up to 80% Commission" />
-<meta property="og:description" content="Asset-backed freight agency built by agents, for agents. Calculate your commission lift in 30 seconds." />
+<meta property="og:description" content="Asset-backed freight agency built by agents, for agents. Keep more of what you earn and off-load the back office." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=li1" />
+<link rel="stylesheet" href="styles.css?v=li3" />
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
@@ -95,14 +95,6 @@ document.head.appendChild(o)}initApollo();</script>
         },
         {
           "@type": "Question",
-          "name": "Why is the calculator based on revenue and not gross profit?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Because the TAB tiers are off the revenue you bill the customer — that's a meaningful advantage. Most agency programs tier off gross profit, which can be inflated, deflated, or interpreted differently. Tiering off top-line revenue is cleaner and harder to game in either direction."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "What do I actually need to get started?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -140,7 +132,6 @@ document.head.appendChild(o)}initApollo();</script>
       <img src="assets/logo.png" alt="TAB" class="brand-logo" />
     </a>
     <nav class="nav-links">
-      <a href="#calculator">Calculator</a>
       <a href="#difference">Why TAB</a>
       <a href="#playbook">Playbook</a>
       <a href="#faq">FAQ</a>
@@ -152,41 +143,16 @@ document.head.appendChild(o)}initApollo();</script>
 <!-- ============ HERO ============ -->
 <section id="top" class="hero">
   <div class="container">
-  <div class="hero-grid">
+  <div class="hero-grid hero-grid--solo">
     <div class="hero-copy">
       <span class="eyebrow">Freight Agent Program</span>
       <h1>Your Business.<br/>Your Terms.<br/><span class="accent">Up to 80% Commission.</span><br/>Backed by Real Assets.</h1>
       <p class="lede">TAB is the asset-backed freight agency built by agents, for agents. Keep more of what you earn, off-load the back office, and tap into the Artur Express fleet to win freight a non-asset broker can't touch.</p>
       <div class="hero-ctas">
-        <a href="#calculator" class="btn btn-primary btn-lg">Calculate your commission lift</a>
+        <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a discovery call</a>
         <a href="#playbook" class="btn btn-ghost btn-lg">Get the growth playbook</a>
       </div>
     </div>
-    <aside class="hero-preview" aria-label="Earnings preview">
-      <div class="hero-preview-tag">A quick example</div>
-      <p class="hero-preview-setup">
-        A domestic agent doing <strong>$6M</strong> in revenue at a <strong>60%</strong> split moves to TAB and earns…
-      </p>
-      <div class="hero-preview-lift">
-        <span class="hero-preview-prefix">+</span>
-        <span class="hero-preview-number" data-target="90000">$0</span>
-        <span class="hero-preview-suffix">/ year</span>
-      </div>
-      <div class="hero-preview-meta">
-        <span class="hero-preview-pct">+16.7% raise</span>
-        <span class="hero-preview-divider"></span>
-        <span class="hero-preview-note">Same book. Same effort.</span>
-      </div>
-      <div class="hero-preview-breakdown">
-        <div><span>Agent today</span><strong>$540,000</strong></div>
-        <div class="arrow">→</div>
-        <div><span>Agent at TAB</span><strong>$630,000</strong></div>
-      </div>
-      <a href="#calculator" class="hero-preview-cta">
-        Run your own numbers
-        <span class="hero-preview-cta-arrow">↓</span>
-      </a>
-    </aside>
   </div><!-- /hero-grid -->
 
   <ul class="hero-proof">
@@ -211,122 +177,7 @@ document.head.appendChild(o)}initApollo();</script>
   </div>
 </section>
 
-<!-- ============ CALCULATOR ============ -->
-<section id="calculator" class="section calc-section">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Earnings Calculator · 30-Second Tool</span>
-      <h2>See exactly how much more you'd earn at TAB</h2>
-      <p>Enter the <strong>top-line revenue you bill customers</strong> and your current split. We'll show your projected take-home at TAB — based on our published commission tiers.</p>
-    </div>
-
-    <div class="calc-grid">
-      <form id="calc-form" class="calc-form" novalidate>
-        <div class="field">
-          <label for="annualRevenue">
-            Your annual customer revenue
-            <span class="info-tip" tabindex="0" aria-label="See definitions">
-              <span class="info-tip-icon" aria-hidden="true">ⓘ</span>
-              <span class="info-tip-content" role="tooltip">
-                <strong>Revenue</strong> — total amount you bill your customers.<br/>
-                <strong>Gross profit</strong> — revenue minus what you pay carriers.<br/>
-                <strong>Margin</strong> — gross profit ÷ revenue (industry blend ≈ 15%).
-              </span>
-            </span>
-          </label>
-          <div class="input-prefix">
-            <span>$</span>
-            <input type="number" id="annualRevenue" min="0" step="100000" placeholder="e.g. 6,000,000" required />
-          </div>
-          <small>Top-line revenue (amount you bill your customers, not gross profit). This is what TAB bases your tier on.</small>
-        </div>
-
-        <div class="field">
-          <label for="region">Where are you based?</label>
-          <select id="region" class="select" required>
-            <option value="" disabled selected>Select a region…</option>
-            <option value="domestic">USA</option>
-            <option value="international">International</option>
-          </select>
-          <small id="region-help">USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60% (locked).</small>
-        </div>
-
-        <div class="field">
-          <label for="currentSplit">Your current commission split</label>
-          <div class="input-suffix">
-            <input type="number" id="currentSplit" min="1" max="100" step="1" placeholder="e.g. 60" required />
-            <span>%</span>
-          </div>
-          <small id="currentSplit-help">Most agents fall between 50% and 70%.</small>
-        </div>
-
-        <div class="field">
-          <label for="gpMargin">(Optional) Your average gross profit margin</label>
-          <div class="input-suffix">
-            <input type="number" id="gpMargin" min="0" max="100" step="0.5" placeholder="15" />
-            <span>%</span>
-          </div>
-          <small>Leave blank to use the historical 15% industry blend.</small>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate my lift</button>
-      </form>
-
-      <div class="calc-result" id="calc-result" aria-live="polite">
-        <div class="calc-result-head">
-          <span class="eyebrow">Your projection</span>
-          <h3>Run the numbers</h3>
-          <p class="muted">Fill the form and hit calculate.</p>
-        </div>
-
-        <div class="calc-numbers" hidden>
-          <div class="calc-row">
-            <span>Your TAB commission tier</span>
-            <strong id="r-tier">—</strong>
-          </div>
-          <div class="calc-row">
-            <span>Estimated gross profit</span>
-            <strong id="r-gp">$0</strong>
-          </div>
-          <div class="calc-row">
-            <span>You today</span>
-            <strong id="r-current">$0</strong>
-          </div>
-          <div class="calc-row total">
-            <span>You at TAB</span>
-            <strong id="r-tab">$0</strong>
-          </div>
-          <div class="calc-lift">
-            <div>
-              <span>You'd earn an additional</span>
-              <strong id="r-delta">$0 / year</strong>
-            </div>
-            <div class="calc-lift-pct">
-              <span>That's a</span>
-              <strong id="r-pct">+0%</strong>
-              <span>lift</span>
-            </div>
-          </div>
-          <p class="calc-disclaimer"><strong>For illustration only.</strong> This is a preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin — not a guaranteed offer or commitment.</p>
-        </div>
-
-        <form id="lead-form" class="lead-form" hidden>
-          <h4>Email me this report + the Growth Playbook</h4>
-          <div class="lead-row">
-            <input type="text" name="name" placeholder="Full name" required />
-            <input type="email" name="email" placeholder="Personal email" required />
-          </div>
-          <div class="lead-row">
-            <input type="tel" name="phone" placeholder="Phone (optional)" />
-            <input type="text" name="company" placeholder="Current agency / company" />
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Send my report + playbook</button>
-          <p class="form-note">Use a personal email — we'll send your custom report there. No spam.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ============ CALCULATOR (temporarily removed) ============ -->
 
 <!-- ============ THE TAB DIFFERENCE ============ -->
 <section id="difference" class="section dark">
@@ -616,10 +467,6 @@ document.head.appendChild(o)}initApollo();</script>
         <p>Less than 2% customer conflict ratio in TAB transitions. Most agencies are happy if 70% of a "fully committed" book actually converts. The difference is our Agent Development team — we sit with you through customer onboarding, credit setup (1–2 hours per account), and your first loads, instead of handing you a portal and wishing you luck.</p>
       </details>
       <details>
-        <summary>Why is the calculator based on revenue and not gross profit?</summary>
-        <p>Because the TAB tiers are off the revenue you bill the customer — that's a meaningful advantage. Most agency programs tier off gross profit, which can be inflated, deflated, or interpreted differently. Tiering off top-line revenue is cleaner and harder to game in either direction.</p>
-      </details>
-      <details>
         <summary>What do I actually need to get started?</summary>
         <p>A computer, a phone, high-speed internet, transportation experience, and a customer book of business. Everything else — TMS, carrier load boards, B2B data intelligence tools (at reduced cost), insurance, surety bond, authority, billing, claims — is on TAB. <em>Note: TAB does not provide customer leads.</em></p>
       </details>
@@ -645,7 +492,6 @@ document.head.appendChild(o)}initApollo();</script>
     <h2>Ready to see what your book could do at TAB?</h2>
     <p>Book a 30-minute discovery call with TAB leadership. No recruiter pitch — just a real conversation about your business and whether we're a fit.</p>
     <div class="cta-buttons">
-      <a href="#calculator" class="btn btn-ghost-light btn-lg">Run the calculator</a>
       <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a discovery call</a>
     </div>
     <div class="cta-contact">
@@ -666,7 +512,6 @@ document.head.appendChild(o)}initApollo();</script>
     </div>
     <div class="footer-links">
       <a href="https://tab-llc.com" target="_blank" rel="noopener">tab-llc.com</a>
-      <a href="#calculator">Calculator</a>
       <a href="#playbook">Playbook</a>
       <a href="#faq">FAQ</a>
     </div>
@@ -677,6 +522,6 @@ document.head.appendChild(o)}initApollo();</script>
   </div>
 </footer>
 
-<script src="calculator.js?v=li2"></script>
+<script src="calculator.js?v=li3"></script>
 </body>
 </html>
