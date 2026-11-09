@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TAB Calculator — TEST (new math + bonus)</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=calctest" />
+<style>
+  .test-banner {
+    background: #b91c1c; color:#fff; text-align:center;
+    font-size:0.85rem; font-weight:600; padding:8px 16px;
+    letter-spacing:0.02em;
+  }
+  .calc-bonus {
+    margin-top: 16px; padding: 18px 20px; border-radius: 12px;
+    background: linear-gradient(155deg, rgba(13,59,102,0.06), rgba(95,215,228,0.10));
+    border: 1px solid rgba(13,59,102,0.15);
+  }
+  .calc-bonus h4 { margin:0 0 6px; color: var(--navy); font-size: 1.02rem; }
+  .calc-bonus .bonus-amt { color: var(--navy); font-weight: 800; }
+  .calc-bonus p { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-2); line-height:1.5; }
+  .calc-row.csp strong { color:#b91c1c; }
+  .test-note { max-width: 1100px; margin: 0 auto 8px; padding: 0 24px; font-size:0.8rem; color: var(--ink-2); }
+
+  /* New-offer section */
+  .offer-section { background: var(--navy); color:#fff; padding: 64px 0; }
+  .offer-head { text-align:center; max-width:760px; margin:0 auto 40px; }
+  .offer-head .eyebrow { color: var(--cyan); }
+  .offer-head h2 { color:#fff; font-size: clamp(1.6rem,3vw,2.2rem); margin:10px 0 12px; }
+  .offer-head p { color: rgba(255,255,255,0.8); font-size:1.02rem; }
+  .offer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:1000px; margin:0 auto; }
+  @media (max-width:860px){ .offer-grid{ grid-template-columns:1fr; } }
+  .offer-card { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:28px; }
+  .offer-card h3 { color:#fff; margin:0 0 4px; font-size:1.25rem; }
+  .offer-tag { color: var(--cyan); font-size:0.78rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; }
+  .offer-amt { font-size:2rem; font-weight:800; color:#fff; margin:10px 0 2px; }
+  .offer-amt span { color: var(--cyan); }
+  .offer-card p { color: rgba(255,255,255,0.82); font-size:0.92rem; line-height:1.55; margin:10px 0; }
+  .offer-steps { list-style:none; padding:0; margin:14px 0; counter-reset: step; }
+  .offer-steps li { position:relative; padding:9px 0 9px 32px; color: rgba(255,255,255,0.88); font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.08); }
+  .offer-steps li::before { content: counter(step); counter-increment: step; position:absolute; left:0; top:9px; width:22px; height:22px; border-radius:50%; background: var(--cyan); color: var(--navy); font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .ref-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.9rem; }
+  .ref-table th, .ref-table td { padding:8px 10px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.88); }
+  .ref-table th { color: var(--cyan); font-size:0.73rem; text-transform:uppercase; letter-spacing:0.08em; }
+  .offer-fine { font-size:0.76rem; color: rgba(255,255,255,0.55); margin-top:10px; line-height:1.5; }
+  .offer-pending { font-size:0.78rem; color:#ffd27a; margin-top:10px; font-style:italic; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<div class="test-banner">PREVIEW BUILD FOR REVIEW — updated calculator math + new agent bonuses. Not the live site.</div>
+
+<section id="calculator" class="section calc-section" style="padding-top:40px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Earnings Calculator · TEST BUILD</span>
+      <h2>See exactly how much more you'd earn at TAB</h2>
+      <p>Enter the <strong>top-line revenue you bill customers</strong> and your current split. We'll show your projected take-home at TAB — based on our published commission tiers.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form id="calc-form" class="calc-form" novalidate>
+        <div class="field">
+          <label for="annualRevenue">Your annual customer revenue</label>
+          <div class="input-prefix">
+            <span>$</span>
+            <input type="number" id="annualRevenue" min="0" step="100000" placeholder="e.g. 6,000,000" required />
+          </div>
+          <small>Top-line revenue (amount you bill your customers, not gross profit). This is what TAB bases your tier on.</small>
+        </div>
+
+        <div class="field">
+          <label for="region">Where are you based?</label>
+          <select id="region" class="select" required>
+            <option value="" disabled selected>Select a region…</option>
+            <option value="domestic">USA</option>
+            <option value="international">International</option>
+          </select>
+          <small id="region-help">USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60%.</small>
+        </div>
+
+        <div class="field">
+          <label for="currentSplit">Your current commission split</label>
+          <div class="input-suffix">
+            <input type="number" id="currentSplit" min="1" max="100" step="1" placeholder="e.g. 60" required />
+            <span>%</span>
+          </div>
+          <small id="currentSplit-help">Most agents fall between 50% and 70%.</small>
+        </div>
+
+        <div class="field">
+          <label for="gpMargin">(Optional) Your average gross profit margin</label>
+          <div class="input-suffix">
+            <input type="number" id="gpMargin" min="0" max="100" step="0.5" placeholder="15" />
+            <span>%</span>
+          </div>
+          <small>Leave blank to use the historical 15% industry blend.</small>
+        </div>
+
+        <div class="field">
+          <label for="loadsPerMonth">(Optional) Average loads per month</label>
+          <input type="number" id="loadsPerMonth" min="0" step="1" placeholder="e.g. 120" />
+          <small>Used to estimate your monthly cost-share ($19.85 per shipment). Leave blank to see commission before cost-share.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate my lift</button>
+      </form>
+
+      <div class="calc-result" id="calc-result" aria-live="polite">
+        <div class="calc-result-head">
+          <span class="eyebrow">Your projection</span>
+          <h3>Run the numbers</h3>
+          <p class="muted">Fill the form and hit calculate.</p>
+        </div>
+
+        <div class="calc-numbers" hidden>
+          <div class="calc-row">
+            <span>Your TAB commission tier</span>
+            <strong id="r-tier">—</strong>
+          </div>
+          <div class="calc-row">
+            <span>Estimated gross profit</span>
+            <strong id="r-gp">$0</strong>
+          </div>
+          <div class="calc-row">
+            <span>You today</span>
+            <strong id="r-current">$0</strong>
+          </div>
+          <div class="calc-row total">
+            <span>You at TAB (commission)</span>
+            <strong id="r-tab">$0</strong>
+          </div>
+          <div class="calc-row csp" id="row-csp" hidden>
+            <span>Annual cost-share ($19.85 × loads)</span>
+            <strong id="r-csp">−$0</strong>
+          </div>
+          <div class="calc-row total" id="row-net" hidden>
+            <span>You at TAB (after cost-share)</span>
+            <strong id="r-net">$0</strong>
+          </div>
+          <div class="calc-lift">
+            <div>
+              <span>You'd earn an additional</span>
+              <strong id="r-delta">$0 / year</strong>
+            </div>
+            <div class="calc-lift-pct">
+              <span>That's a</span>
+              <strong id="r-pct">+0%</strong>
+              <span>lift</span>
+            </div>
+          </div>
+
+          <div class="calc-bonus">
+            <h4>Plus a sign-on bonus up to <span class="bonus-amt" id="r-bonus">$0</span></h4>
+            <p>New TAB agents can earn a one-time sign-on bonus worth up to 10% of last year's commission income, paid in three milestones as you ramp. Proof of prior-year commission income required (1099 or W-8BEN). Amounts vary and are not guaranteed.</p>
+          </div>
+
+          <p class="calc-disclaimer" style="margin-top:16px;"><strong>For illustration only.</strong> A preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin. Commission is paid on gross profit; a $19.85-per-shipment cost-share applies. Asset / line-haul commission is calculated separately and not included here. Not a guaranteed offer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEW OFFER: BONUSES ============ -->
+<section class="offer-section">
+  <div class="container">
+    <div class="offer-head">
+      <span class="eyebrow">New · Just introduced</span>
+      <h2>Two new ways to earn — on top of your split</h2>
+      <p>Extra money on top of the commission split you already get as a TAB agent.</p>
+    </div>
+    <div class="offer-grid">
+
+      <div class="offer-card">
+        <span class="offer-tag">Sign-On Bonus</span>
+        <div class="offer-amt">Up to <span>10%</span></div>
+        <p>of your prior year's commission income when you join TAB. Made $400,000 last year? That's up to <strong>$40,000</strong> — TAB's money on top of your commission, not out of your split.</p>
+        <ol class="offer-steps">
+          <li>First third — after your first 10 loads.</li>
+          <li>Second third — your first month at 15% margins and 25 loads.</li>
+          <li>Final third — your second month at 15% margins and 50 loads.</li>
+        </ol>
+        <p class="offer-fine">Proof of prior-year commission income required (1099 for domestic agents, W-8BEN for foreign). Milestones have no deadline. Amounts vary and are not guaranteed.</p>
+      </div>
+
+      <div class="offer-card">
+        <span class="offer-tag">Agent Referral Bonus</span>
+        <div class="offer-amt">Up to <span>$5,000</span></div>
+        <p>for every agent you refer who joins and gets moving — open to current TAB agents and outside referrers. The bonus scales with the referred agent's monthly gross profit:</p>
+        <table class="ref-table">
+          <thead><tr><th>Referred agent's GP / month</th><th>Referral bonus</th></tr></thead>
+          <tbody>
+            <tr><td>$5K</td><td>$1,500</td></tr>
+            <tr><td>$10K</td><td>$2,000</td></tr>
+            <tr><td>$15K</td><td>$3,000</td></tr>
+            <tr><td>$20K</td><td>$4,000</td></tr>
+            <tr><td>$25K+</td><td>$5,000</td></tr>
+          </tbody>
+        </table>
+        <ol class="offer-steps">
+          <li>First third — when your referral moves their first load.</li>
+          <li>Second third — if they're still active at 3 months.</li>
+          <li>Final third — if they're still active at 6 months.</li>
+        </ol>
+        <p class="offer-pending">Review note: referral tier amounts above are proposed — confirm before they go on public creative.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   TAB Calculator — TEST build (self-contained, no deps)
+   New vs. live calc: + $19.85/shipment cost-share, + sign-on bonus
+   Split tiers unchanged (domestic 65/70/75/80, intl flat 60).
+   ============================================================ */
+const DOMESTIC_TIERS = [
+  { minRev: 0,          maxRev: 5_000_000,   split: 0.65, label: "≤ $5M" },
+  { minRev: 5_000_000,  maxRev: 10_000_000,  split: 0.70, label: "$5M – $10M" },
+  { minRev: 10_000_000, maxRev: 20_000_000,  split: 0.75, label: "$10M – $20M" },
+  { minRev: 20_000_000, maxRev: Infinity,    split: 0.80, label: "> $20M" },
+];
+const INTERNATIONAL_SPLIT = 0.60;
+const ASSUMED_GP_MARGIN = 0.15;
+const CSP_PER_SHIPMENT = 19.85;
+const SIGNON_BONUS_RATE = 0.10;
+
+const $ = (s) => document.querySelector(s);
+const fmt = (n) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+function tabSplitFor(annualRevenue, region) {
+  if (region === "international") {
+    return { split: INTERNATIONAL_SPLIT, tierLabel: "International agent (flat)" };
+  }
+  for (const tier of DOMESTIC_TIERS) {
+    if (annualRevenue >= tier.minRev && annualRevenue < tier.maxRev) {
+      return { split: tier.split, tierLabel: `Domestic agent · ${tier.label}` };
+    }
+  }
+  return { split: DOMESTIC_TIERS[0].split, tierLabel: DOMESTIC_TIERS[0].label };
+}
+
+const form = $("#calc-form");
+const resultBox = $("#calc-result");
+const numbersBox = resultBox.querySelector(".calc-numbers");
+const placeholderText = resultBox.querySelector(".calc-result-head .muted");
+const regionSelect = $("#region");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const annualRevenue = Number($("#annualRevenue").value) || 0;
+  const region = $("#region").value;
+  const currentSplit = Number($("#currentSplit").value) || 0;
+  const gpMarginPct = Number($("#gpMargin").value) || 0;
+  const gpMargin = gpMarginPct > 0 ? gpMarginPct / 100 : ASSUMED_GP_MARGIN;
+  const loadsPerMonth = Number($("#loadsPerMonth").value) || 0;
+
+  if (!region) { regionSelect.focus(); return; }
+  if (annualRevenue <= 0 || currentSplit <= 0) return;
+
+  const grossProfit = annualRevenue * gpMargin;
+  const { split: tabSplit, tierLabel } = tabSplitFor(annualRevenue, region);
+
+  const currentTake = grossProfit * (currentSplit / 100);
+  const tabTake = grossProfit * tabSplit;                 // commission before cost-share
+  const cspAnnual = loadsPerMonth * 12 * CSP_PER_SHIPMENT;
+  const tabNet = tabTake - cspAnnual;                     // after cost-share
+
+  const compareTab = loadsPerMonth > 0 ? tabNet : tabTake;
+  const delta = compareTab - currentTake;
+  const liftPct = currentTake > 0 ? (delta / currentTake) * 100 : 0;
+  const signOnBonus = currentTake * SIGNON_BONUS_RATE;    // up to 10% of last year's commissions
+
+  $("#r-tier").textContent = `${Math.round(tabSplit * 100)}% — ${tierLabel}`;
+  $("#r-gp").textContent = `${fmt(grossProfit)} (at ${Math.round(gpMargin * 100)}% margin)`;
+  $("#r-current").textContent = fmt(currentTake);
+  $("#r-tab").textContent = fmt(tabTake);
+
+  const rowCsp = $("#row-csp"), rowNet = $("#row-net");
+  if (loadsPerMonth > 0) {
+    $("#r-csp").textContent = `−${fmt(cspAnnual)}`;
+    $("#r-net").textContent = fmt(tabNet);
+    rowCsp.hidden = false; rowNet.hidden = false;
+  } else {
+    rowCsp.hidden = true; rowNet.hidden = true;
+  }
+
+  const sign = delta >= 0 ? "+" : "−";
+  $("#r-delta").textContent = `${sign}${fmt(Math.abs(delta))} / year`;
+  $("#r-pct").textContent = `${liftPct >= 0 ? "+" : ""}${liftPct.toFixed(0)}%`;
+  $("#r-bonus").textContent = fmt(signOnBonus);
+
+  numbersBox.hidden = false;
+  if (placeholderText) placeholderText.style.display = "none";
+  resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+</script>
+</body>
+</html>
