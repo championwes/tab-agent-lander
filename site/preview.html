@@ -20,6 +20,7 @@
   .calc-bonus .bonus-amt{color:var(--navy);font-weight:800;}
   .calc-bonus p{margin:6px 0 0;font-size:0.82rem;color:var(--ink-2);line-height:1.5;}
   .calc-row.csp strong{color:#b91c1c;}
+  .calc-row[hidden]{display:none !important;}
   .offer-section{background:var(--navy);color:#fff;padding:64px 0;}
   .offer-head{text-align:center;max-width:760px;margin:0 auto 40px;}
   .offer-head .eyebrow{color:var(--cyan);}
@@ -276,7 +277,7 @@ document.head.appendChild(o)}initApollo();</script>
           <div class="calc-row"><span>Your TAB commission tier</span><strong id="r-tier">—</strong></div>
           <div class="calc-row"><span>Estimated gross profit</span><strong id="r-gp">$0</strong></div>
           <div class="calc-row"><span>You today</span><strong id="r-current">$0</strong></div>
-          <div class="calc-row total"><span>You at TAB (commission)</span><strong id="r-tab">$0</strong></div>
+          <div class="calc-row total"><span id="r-tab-label">You at TAB</span><strong id="r-tab">$0</strong></div>
           <div class="calc-row csp" id="row-csp" hidden><span>Annual cost-share ($19.85 × loads)</span><strong id="r-csp">−$0</strong></div>
           <div class="calc-row total" id="row-net" hidden><span>You at TAB (after cost-share)</span><strong id="r-net">$0</strong></div>
           <div class="calc-lift">
@@ -289,7 +290,7 @@ document.head.appendChild(o)}initApollo();</script>
             <p>New TAB agents can earn a one-time sign-on bonus worth up to 10% of last year's commission income, paid in three milestones as you ramp. Proof of prior-year commission income required (1099 or W-8BEN). Amounts vary and are not guaranteed.</p>
           </div>
 
-          <p class="calc-disclaimer" style="margin-top:16px;"><strong>For illustration only.</strong> A preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin. Commission is paid on gross profit; a $19.85-per-shipment cost-share applies. Asset / line-haul commission is calculated separately and not included here. Not a guaranteed offer.</p>
+          <p class="calc-disclaimer" style="margin-top:16px;"><strong>For illustration only.</strong> A preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin. Commission is paid on gross profit.<span id="disc-csp" hidden> A $19.85-per-shipment cost-share applies.</span> Asset / line-haul commission is calculated separately and not included here. Not a guaranteed offer.</p>
         </div>
 
         <form id="lead-form-preview" class="lead-form" hidden>
@@ -764,12 +765,18 @@ document.head.appendChild(o)}initApollo();</script>
     $("#r-current").textContent = fmt(today);
     $("#r-tab").textContent = fmt(tab);
 
-    const rc = $("#row-csp"), rn = $("#row-net");
+    const rc = $("#row-csp"), rn = $("#row-net"), discCsp = $("#disc-csp"), tabLabel = $("#r-tab-label");
     if (loads > 0) {
       $("#r-csp").textContent = "−" + fmt(csp);
       $("#r-net").textContent = fmt(net);
       rc.hidden = false; rn.hidden = false;
-    } else { rc.hidden = true; rn.hidden = true; }
+      if (discCsp) discCsp.hidden = false;
+      if (tabLabel) tabLabel.textContent = "You at TAB (commission)";
+    } else {
+      rc.hidden = true; rn.hidden = true;
+      if (discCsp) discCsp.hidden = true;
+      if (tabLabel) tabLabel.textContent = "You at TAB";
+    }
 
     $("#r-delta").textContent = (delta >= 0 ? "+" : "−") + fmt(Math.abs(delta)) + " / year";
     $("#r-pct").textContent = (lift >= 0 ? "+" : "") + lift.toFixed(0) + "%";
