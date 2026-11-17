@@ -5,32 +5,31 @@
      - Annual customer revenue (top-line, what TAB bills the customer — NOT gross profit)
      - Region (Domestic / International)
      - Current commission split %
+     - Optional GP margin (default 15%) and optional loads per month
 
-   Tiers (per Brian, 4/27 sync):
-     Domestic:
-       ≤ $5M       → 65%
-       $5M–$10M    → 70%
-       $10M–$20M   → 75%
-       > $20M      → 80%
-     International:
-       Flat 60% (caps at 60)
+   Tiers (agency contract, Appendix D — unchanged in the 9/24/2026 revision):
+     Domestic:  ≤ $5M 65% · $5M–$10M 70% · $10M–$20M 75% · > $20M 80%
+     International: flat 60%
 
-   GP assumption for take-home math: 15% (historical industry blend per Mark).
-   Asset/line-haul bonus is intentionally excluded — different formula, and
-   agents are not incentivized to sell assets.
+   Cost-share plan (Appendix E): $19.85 per shipment, shown only when the
+   visitor enters loads per month.
+   Sign-on bonus: one-time, up to 10% of last year's commission income
+   (proof: 1099 / W-8BEN), shown separately from the recurring annual lift.
+   Asset/line-haul commission is intentionally excluded (different formula).
    ============================================ */
 
 const DOMESTIC_TIERS = [
-  { minRev: 0,         maxRev: 5_000_000,   split: 0.65, label: "≤ $5M" },
-  { minRev: 5_000_000, maxRev: 10_000_000,  split: 0.70, label: "$5M – $10M" },
+  { minRev: 0,          maxRev: 5_000_000,  split: 0.65, label: "≤ $5M" },
+  { minRev: 5_000_000,  maxRev: 10_000_000, split: 0.70, label: "$5M – $10M" },
   { minRev: 10_000_000, maxRev: 20_000_000, split: 0.75, label: "$10M – $20M" },
   { minRev: 20_000_000, maxRev: Infinity,   split: 0.80, label: "> $20M" },
 ];
 
 const INTERNATIONAL_SPLIT = 0.60;
-const ASSUMED_GP_MARGIN = 0.15; // 15% historical blended margin
+const ASSUMED_GP_MARGIN = 0.15;   // 15% historical blended margin
+const CSP_PER_SHIPMENT = 19.85;   // cost-share plan, per load
+const SIGNON_BONUS_RATE = 0.10;   // up to 10% of prior-year commission income
 
-/* ---------- Endpoint placeholders ---------- */
 const LEAD_ENDPOINT = "/api/lead";
 const PLAYBOOK_ENDPOINT = "/api/playbook";
 
@@ -53,44 +52,34 @@ function tabSplitFor(annualRevenue, region) {
   return { split: DOMESTIC_TIERS[0].split, tierLabel: DOMESTIC_TIERS[0].label };
 }
 
-function calculate({ annualRevenue, region, currentSplit, gpMargin }) {
+function calculate({ annualRevenue, region, currentSplit, gpMargin, loadsPerMonth }) {
   const margin = gpMargin > 0 ? gpMargin : ASSUMED_GP_MARGIN;
   const grossProfit = annualRevenue * margin;
-
   const { split: tabSplit, tierLabel } = tabSplitFor(annualRevenue, region);
 
   const currentTake = grossProfit * (currentSplit / 100);
-  const tabTake = grossProfit * tabSplit;
-  const delta = tabTake - currentTake;
+  const tabTake = grossProfit * tabSplit;                    // commission before cost-share
+  const cspAnnual = loadsPerMonth > 0 ? loadsPerMonth * 12 * CSP_PER_SHIPMENT : 0;
+  const tabNet = tabTake - cspAnnual;                        // after cost-share
+  const delta = (loadsPerMonth > 0 ? tabNet : tabTake) - currentTake;
   const liftPct = currentTake > 0 ? (delta / currentTake) * 100 : 0;
+  const signOnBonus = currentTake * SIGNON_BONUS_RATE;      // one-time, year one only
 
-  return {
-    grossProfit,
-    margin,
-    tabSplit,
-    tierLabel,
-    currentTake,
-    tabTake,
-    delta,
-    liftPct,
-  };
+  return { grossProfit, margin, tabSplit, tierLabel, currentTake, tabTake,
+           loadsPerMonth, cspAnnual, tabNet, delta, liftPct, signOnBonus };
 }
 
 /* ============================================
    Calculator wiring
    ============================================ */
 const calcForm = $("#calc-form");
+const resultBox = $("#calc-result");
 
-/* Calculator wiring — only runs when the calculator is present on the page. */
-if (calcForm) {
-  const resultBox = $("#calc-result");
+if (calcForm && resultBox) {
   const numbersBox = resultBox.querySelector(".calc-numbers");
   const leadFormBox = $("#lead-form");
   const placeholderText = resultBox.querySelector(".calc-result-head .muted");
 
-  /* Region dropdown drives the current-split helper.
-     - International selected → TAB pays flat 60% regardless of input; flag this in the helper.
-     - Domestic selected     → standard helper text. */
   const regionSelect = $("#region");
   const splitHelp = $("#currentSplit-help");
   const splitHelpDomestic = "Most agents fall between 50% and 70%.";
@@ -106,35 +95,44 @@ if (calcForm) {
     e.preventDefault();
 
     const annualRevenue = Number($("#annualRevenue").value) || 0;
-    const region = $("#region").value;
+    const region = regionSelect.value;
     const currentSplit = Number($("#currentSplit").value) || 0;
     const gpMarginPct = Number($("#gpMargin").value) || 0;
     const gpMargin = gpMarginPct > 0 ? gpMarginPct / 100 : ASSUMED_GP_MARGIN;
+    const loadsPerMonth = Number($("#loadsPerMonth").value) || 0;
 
-    if (!region) {
-      regionSelect.focus();
-      return;
-    }
+    if (!region) { regionSelect.focus(); return; }
     if (annualRevenue <= 0 || currentSplit <= 0) return;
 
-    const r = calculate({ annualRevenue, region, currentSplit, gpMargin });
+    const r = calculate({ annualRevenue, region, currentSplit, gpMargin, loadsPerMonth });
 
     $("#r-tier").textContent = `${Math.round(r.tabSplit * 100)}% — ${r.tierLabel}`;
     $("#r-gp").textContent = `${fmt(r.grossProfit)} (at ${Math.round(r.margin * 100)}% margin)`;
     $("#r-current").textContent = fmt(r.currentTake);
     $("#r-tab").textContent = fmt(r.tabTake);
 
+    // Cost-share rows only appear when the visitor entered loads per month.
+    const hasLoads = loadsPerMonth > 0;
+    $("#row-csp").hidden = !hasLoads;
+    $("#row-net").hidden = !hasLoads;
+    $("#disc-csp").hidden = !hasLoads;
+    $("#r-tab-label").textContent = hasLoads ? "You at TAB (commission)" : "You at TAB";
+    if (hasLoads) {
+      $("#r-csp").textContent = `−${fmt(r.cspAnnual)}`;
+      $("#r-net").textContent = fmt(r.tabNet);
+    }
+
     const deltaSign = r.delta >= 0 ? "+" : "−";
     $("#r-delta").textContent = `${deltaSign}${fmt(Math.abs(r.delta))} / year`;
-    // (label above already reads "You'd earn an additional")
     $("#r-pct").textContent = `${r.liftPct >= 0 ? "+" : ""}${r.liftPct.toFixed(0)}%`;
+    $("#r-bonus").textContent = fmt(r.signOnBonus);
 
     numbersBox.hidden = false;
     leadFormBox.hidden = false;
     if (placeholderText) placeholderText.style.display = "none";
 
     resultBox.dataset.payload = JSON.stringify({
-      inputs: { annualRevenue, region, currentSplit, gpMarginPct: gpMarginPct || 15 },
+      inputs: { annualRevenue, region, currentSplit, gpMarginPct: gpMarginPct || 15, loadsPerMonth },
       results: r,
     });
 
@@ -199,6 +197,12 @@ async function submitLead(form, endpoint, extraPayload = {}) {
 }
 
 document.addEventListener("submit", (e) => {
+  if (e.target.id === "lead-form") {
+    e.preventDefault();
+    const calcPayload = resultBox && resultBox.dataset.payload ? JSON.parse(resultBox.dataset.payload) : {};
+    submitLead(e.target, LEAD_ENDPOINT, { source: "calculator", ...calcPayload });
+  }
+
   if (e.target.id === "playbook-form") {
     e.preventDefault();
     submitLead(e.target, PLAYBOOK_ENDPOINT, { source: "playbook" });

@@ -78,6 +78,8 @@ function leadHtml({ name, inputs, results, siteUrl }) {
   const liftPct =
     results.liftPct != null ? `${results.liftPct >= 0 ? "+" : ""}${results.liftPct.toFixed(0)}%` : "";
   const pdfUrl = `${siteUrl.replace(/\/$/, "")}/playbook.pdf`;
+  const hasLoads = Number(inputs.loadsPerMonth) > 0 && results.cspAnnual != null;
+  const bonus = results.signOnBonus > 0 ? fmtUsd(results.signOnBonus) : "";
 
   return baseShell(`
     <p>Hi ${firstName},</p>
@@ -90,11 +92,19 @@ function leadHtml({ name, inputs, results, siteUrl }) {
         ${row("GP margin used", `${escapeHtml(inputs.gpMarginPct ?? 15)}%`)}
         ${row("Estimated gross profit", fmtUsd(results.grossProfit))}
         ${row("You today", fmtUsd(results.currentTake))}
-        ${row("You at TAB", `<strong>${fmtUsd(results.tabTake)}</strong> (${tabSplitPct})`)}
-        ${row("Annual lift", `<strong style="color:#0d3b66;">+${lift} ${liftPct}</strong>`)}
+        ${row(hasLoads ? "You at TAB (commission)" : "You at TAB", `<strong>${fmtUsd(results.tabTake)}</strong> (${tabSplitPct})`)}
+        ${hasLoads ? row(`Cost-share ($19.85 × ${Number(inputs.loadsPerMonth)} loads/mo)`, `&minus;${fmtUsd(results.cspAnnual)}`) : ""}
+        ${hasLoads ? row("You at TAB (after cost-share)", `<strong>${fmtUsd(results.tabNet)}</strong>`) : ""}
+        ${row("Annual lift (recurring)", `<strong style="color:#0d3b66;">+${lift} ${liftPct}</strong>`)}
       </tbody>
     </table>
-    <p style="font-size:13px;color:#6b7280;"><strong>For illustration only.</strong> Based on TAB's published commission tiers and a 15% historical industry margin — not a guaranteed offer.</p>
+    ${bonus ? `
+    <div style="margin:18px 0;padding:16px 18px;border-radius:8px;background:#0d3b66;color:#ffffff;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#5fd7e4;">One-time &middot; Year one only</div>
+      <div style="font-size:16px;margin-top:6px;">Plus a sign-on bonus of up to <strong style="font-size:20px;color:#5fd7e4;">${bonus}</strong></div>
+      <div style="font-size:12px;margin-top:6px;color:#d1d9e6;line-height:1.5;">Up to 10% of last year's commission income, paid in three milestones as you ramp. Requires proof of prior-year commission income (1099 or W-8BEN). Not part of the annual figure above. Amounts vary and are not guaranteed.</div>
+    </div>` : ""}
+    <p style="font-size:13px;color:#6b7280;"><strong>For illustration only.</strong> Based on TAB's published commission tiers and a 15% historical industry margin. Commission is paid on gross profit${hasLoads ? "; a $19.85-per-shipment cost-share applies" : ""}. Not a guaranteed offer.</p>
 
     <hr style="border:none;border-top:1px solid #e5e7eb;margin:28px 0;" />
     <h3 style="margin:0 0 10px;color:#0d3b66;font-size:17px;">While you're here — grab the Growth Playbook</h3>
@@ -139,7 +149,10 @@ function notifyHtml({ name, email, phone, company, inputs, results, attribution,
         ${row("GP margin used", `${escapeHtml(inputs.gpMarginPct ?? 15)}%`)}
         ${row("You today", fmtUsd(results.currentTake))}
         ${row("You at TAB", `${fmtUsd(results.tabTake)} (${tabSplitPct})`)}
-        ${row("Annual lift", `<strong>+${fmtUsd(results.delta)} ${liftPct}</strong>`)}
+        ${Number(inputs.loadsPerMonth) > 0 ? row("Loads / month", escapeHtml(inputs.loadsPerMonth)) : ""}
+        ${Number(inputs.loadsPerMonth) > 0 ? row("After cost-share", `${fmtUsd(results.tabNet)} (&minus;${fmtUsd(results.cspAnnual)})`) : ""}
+        ${row("Annual lift (recurring)", `<strong>+${fmtUsd(results.delta)} ${liftPct}</strong>`)}
+        ${results.signOnBonus > 0 ? row("Sign-on bonus (one-time)", `up to ${fmtUsd(results.signOnBonus)}`) : ""}
       </tbody>
     </table>
     ${attributionBlock(attribution, pageUrl)}

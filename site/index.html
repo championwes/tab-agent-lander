@@ -19,7 +19,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=li3" />
+<link rel="stylesheet" href="styles.css?v=bonus1" />
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
@@ -144,6 +144,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <img src="assets/logo.png" alt="TAB" class="brand-logo" />
     </a>
     <nav class="nav-links">
+      <a href="#calculator">Calculator</a>
       <a href="#difference">Why TAB</a>
       <a href="#playbook">Playbook</a>
       <a href="#faq">FAQ</a>
@@ -161,7 +162,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h1>Your Business.<br/>Your Terms.<br/><span class="accent">Up to 80% Commission.</span><br/>Backed by Real Assets.</h1>
       <p class="lede">TAB is the asset-backed freight agency built by agents, for agents. Keep more of what you earn, off-load the back office, and tap into the Artur Express fleet to win freight a non-asset broker can't touch.</p>
       <div class="hero-ctas">
-        <a href="https://meetings-na2.hubspot.com/brian-aubuchon?uuid=6d1750eb-50ef-4dce-ad5d-9bf71dc2f1e6" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a discovery call</a>
+        <a href="#calculator" class="btn btn-primary btn-lg">See your earnings at TAB</a>
         <a href="#playbook" class="btn btn-ghost btn-lg">Get the growth playbook</a>
       </div>
     </div>
@@ -189,7 +190,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ============ CALCULATOR (temporarily removed) ============ -->
+<!-- ============ CALCULATOR ============ -->
+<section id="calculator" class="section calc-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Earnings Calculator · 30-Second Tool</span>
+      <h2>See exactly how much more you'd earn at TAB</h2>
+      <p>Enter the <strong>top-line revenue you bill customers</strong> and your current split. We'll show your projected take-home at TAB — based on our published commission tiers.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form id="calc-form" class="calc-form" novalidate>
+        <div class="field">
+          <label for="annualRevenue">Your annual customer revenue</label>
+          <div class="input-prefix">
+            <span>$</span>
+            <input type="number" id="annualRevenue" min="0" step="100000" placeholder="e.g. 6,000,000" required />
+          </div>
+          <small>Top-line revenue (amount you bill your customers, not gross profit). This is what TAB bases your tier on.</small>
+        </div>
+
+        <div class="field">
+          <label for="region">Where are you based?</label>
+          <select id="region" class="select" required>
+            <option value="" disabled selected>Select a region…</option>
+            <option value="domestic">USA</option>
+            <option value="international">International</option>
+          </select>
+          <small id="region-help">USA-based agents earn the tiered scale up to 80%. International agents earn a flat 60%.</small>
+        </div>
+
+        <div class="field">
+          <label for="currentSplit">Your current commission split</label>
+          <div class="input-suffix">
+            <input type="number" id="currentSplit" min="1" max="100" step="1" placeholder="e.g. 60" required />
+            <span>%</span>
+          </div>
+          <small id="currentSplit-help">Most agents fall between 50% and 70%.</small>
+        </div>
+
+        <div class="field">
+          <label for="gpMargin">(Optional) Your average gross profit margin</label>
+          <div class="input-suffix">
+            <input type="number" id="gpMargin" min="0" max="100" step="0.5" placeholder="15" />
+            <span>%</span>
+          </div>
+          <small>Leave blank to use the historical 15% industry blend.</small>
+        </div>
+
+        <div class="field">
+          <label for="loadsPerMonth">(Optional) Average loads per month</label>
+          <input type="number" id="loadsPerMonth" min="0" step="1" placeholder="e.g. 120" />
+          <small>Used to estimate your monthly cost-share ($19.85 per shipment). Leave blank to see commission before cost-share.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Calculate my lift</button>
+      </form>
+
+      <div class="calc-result" id="calc-result" aria-live="polite">
+        <div class="calc-result-head">
+          <span class="eyebrow">Your projection</span>
+          <h3>Run the numbers</h3>
+          <p class="muted">Fill the form and hit calculate.</p>
+        </div>
+
+        <div class="calc-numbers" hidden>
+          <div class="calc-row"><span>Your TAB commission tier</span><strong id="r-tier">—</strong></div>
+          <div class="calc-row"><span>Estimated gross profit</span><strong id="r-gp">$0</strong></div>
+          <div class="calc-row"><span>You today</span><strong id="r-current">$0</strong></div>
+          <div class="calc-row total"><span id="r-tab-label">You at TAB</span><strong id="r-tab">$0</strong></div>
+          <div class="calc-row csp" id="row-csp" hidden><span>Annual cost-share ($19.85 × loads)</span><strong id="r-csp">−$0</strong></div>
+          <div class="calc-row total" id="row-net" hidden><span>You at TAB (after cost-share)</span><strong id="r-net">$0</strong></div>
+          <div class="calc-lift">
+            <div><span>You'd earn an additional</span><strong id="r-delta">$0 / year</strong><small class="calc-lift-sub">Recurring, every year</small></div>
+            <div class="calc-lift-pct"><span>That's a</span><strong id="r-pct">+0%</strong><span>lift</span></div>
+            <div class="calc-lift-bonus">
+              <span class="bonus-tag">One-time &middot; Year one only</span>
+              <p class="bonus-line">Plus a sign-on bonus of up to <strong id="r-bonus">$0</strong></p>
+              <p class="bonus-fine">Up to 10% of last year's commission income, paid in three milestones as you ramp. Requires proof of prior-year commission income (1099 or W-8BEN). Not part of the annual figure above. Amounts vary and are not guaranteed.</p>
+            </div>
+          </div>
+
+          <p class="calc-disclaimer" style="margin-top:16px;"><strong>For illustration only.</strong> A preliminary estimate based on TAB's published commission tiers and a 15% historical industry margin. Commission is paid on gross profit.<span id="disc-csp" hidden> A $19.85-per-shipment cost-share applies.</span> Asset / line-haul commission is calculated separately and not included here. Not a guaranteed offer.</p>
+        </div>
+
+        <form id="lead-form" class="lead-form" hidden>
+          <h4>Email me this report + the Growth Playbook</h4>
+          <div class="lead-row">
+            <input type="text" name="name" placeholder="Full name" required />
+            <input type="email" name="email" placeholder="Personal email" required />
+          </div>
+          <div class="lead-row">
+            <input type="tel" name="phone" placeholder="Phone (optional)" />
+            <input type="text" name="company" placeholder="Current agency / company" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send my report + playbook</button>
+          <p class="form-note">Use a personal email — we'll send your custom report there. No spam.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ THE TAB DIFFERENCE ============ -->
 <section id="difference" class="section dark">
@@ -235,6 +336,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="stat-card"><strong>92%</strong><span>of agents grew in the past 2 years</span></div>
       <div class="stat-card"><strong>&lt; 2%</strong><span>customer conflict ratio in transition</span></div>
       <div class="stat-card"><strong>$250K → $12M</strong><span>top agent growth in 5 years</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEW OFFER: BONUSES ============ -->
+<section class="offer-section">
+  <div class="container">
+    <div class="offer-head">
+      <span class="eyebrow">New · Just introduced</span>
+      <h2>Two new ways to earn — on top of your split</h2>
+      <p>Extra money on top of the commission split you already get as a TAB agent.</p>
+    </div>
+    <div class="offer-grid">
+
+      <div class="offer-card">
+        <span class="offer-tag">Sign-On Bonus</span>
+        <div class="offer-amt">Up to <span>10%</span></div>
+        <p>of your prior year's commission income when you join TAB. Made $400,000 last year? That's up to <strong>$40,000</strong> — TAB's money on top of your commission, not out of your split.</p>
+        <ol class="offer-steps">
+          <li>First third — after your first 10 loads.</li>
+          <li>Second third — your first month at 15% margins and 25 loads.</li>
+          <li>Final third — your second month at 15% margins and 50 loads.</li>
+        </ol>
+        <p class="offer-fine">Proof of prior-year commission income required (1099 for domestic agents, W-8BEN for foreign). Milestones have no deadline. Amounts vary and are not guaranteed.</p>
+      </div>
+
+      <div class="offer-card">
+        <span class="offer-tag">Agent Referral Bonus</span>
+        <div class="offer-amt">Up to <span>$5,000</span></div>
+        <div class="offer-every">for <span>every</span> agent you refer</div>
+        <p>Refer more than one agent and earn a bonus for each one who joins and gets moving. Open to current TAB agents and outside referrers. Each bonus scales with that agent's monthly gross profit:</p>
+        <table class="ref-table">
+          <thead><tr><th>Referred agent's GP / month</th><th>Referral bonus</th></tr></thead>
+          <tbody>
+            <tr><td>$5K</td><td>$1,500</td></tr>
+            <tr><td>$10K</td><td>$2,000</td></tr>
+            <tr><td>$15K</td><td>$3,000</td></tr>
+            <tr><td>$20K</td><td>$4,000</td></tr>
+            <tr><td>$25K+</td><td>$5,000</td></tr>
+          </tbody>
+        </table>
+        <ol class="offer-steps">
+          <li>First third — when your referral moves their first load.</li>
+          <li>Second third — if they're still active at 3 months.</li>
+          <li>Final third — if they're still active at 6 months.</li>
+        </ol>
+      </div>
+
     </div>
   </div>
 </section>
@@ -524,6 +673,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-links">
       <a href="https://tab-llc.com" target="_blank" rel="noopener">tab-llc.com</a>
+      <a href="#calculator">Calculator</a>
       <a href="#playbook">Playbook</a>
       <a href="#faq">FAQ</a>
     </div>
@@ -534,6 +684,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="calculator.js?v=li3"></script>
+<script src="calculator.js?v=bonus1"></script>
 </body>
 </html>
